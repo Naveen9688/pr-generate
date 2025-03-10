@@ -1,0 +1,410 @@
+
+<app-static-header></app-static-header>
+
+<div class="table-wrapper">
+  <!-- Title Section -->
+  <div class="table-title">
+    <span>Punishment Roll Data</span>
+  </div>
+  <!-- Search Section -->
+  <mat-card class="search-container">
+    <div class="search-section">
+      <div class="search-fields">
+        <!-- First Row (6 Fields) -->
+        <div class="search-row">
+          <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Select PR No</mat-label>
+            <input type="text" matInput [(ngModel)]="prNo" [matAutocomplete]="autoIfprNo" (ngModelChange)="filterprno()"  (keyup)="filterprno()" />
+            <mat-autocomplete #autoIfprNo="matAutocomplete" (optionSelected)="selectItemprno($event.option.value)">
+              <mat-option *ngFor="let item of filteredListprno" [value]="item">{{ item }}</mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Select Year</mat-label>
+            <input type="text" matInput [(ngModel)]="year" [matAutocomplete]="autoIfyear" (ngModelChange)="filteryear()" (keyup)="filteryear()" />
+            <mat-autocomplete #autoIfyear="matAutocomplete" (optionSelected)="selectItemyear($event.option.value)">
+              <mat-option *ngFor="let item of filteredListyear" [value]="item.year">{{ item.year }}</mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Select Name</mat-label>
+            <input type="text" matInput [(ngModel)]="delnquenceName" [matAutocomplete]="autoName" (ngModelChange)="filterList()" />
+            <mat-autocomplete #autoName="matAutocomplete" (optionSelected)="selectItem($event.option.value)">
+              <mat-option *ngFor="let item of filteredList" [value]="item">{{ item }}</mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Select IfhrmsNo</mat-label>
+            <input type="text" matInput [(ngModel)]="ifhrmsNo" [matAutocomplete]="autoIfhrmsNo" (ngModelChange)="filterIfhrmsNo()" (keyup)="filterIfhrmsNo()"/>
+            <mat-autocomplete #autoIfhrmsNo="matAutocomplete" (optionSelected)="selectItems($event.option.value)">
+              <mat-option *ngFor="let item of filteredListIfhrmsNo" [value]="item.ifhrmsNo">{{ item.ifhrmsNo }}</mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Select Rank No</mat-label>
+            <input type="text" matInput [(ngModel)]="delnquenceRankNo" [matAutocomplete]="autodelnquenceRankNo" (ngModelChange)="filterdelnquenceRankNo()" (keyup)="filterdelnquenceRankNo()"/>
+            <mat-autocomplete #autodelnquenceRankNo="matAutocomplete" (optionSelected)="selectItemrankno($event.option.value)">
+              <mat-option *ngFor="let item of filteredListprRankNo" [value]="item.delnquenceRankNo">{{ item.delnquenceRankNo }}</mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+  
+        </div>
+        
+        <!-- Second Row (Remaining Fields + Search Button) -->
+        <div class="search-row">
+
+          <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Select Rank</mat-label>
+            <input type="text" matInput [(ngModel)]="rankname" [matAutocomplete]="autorank" (ngModelChange)="filterrank($event)" placeholder="Type to search..." />
+            <mat-autocomplete #autorank="matAutocomplete" (optionSelected)="selectrank($event.option.value)">
+              <mat-option *ngFor="let item of ranklist" [value]="item.rankid">{{ item.rankname }}</mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Select Working Place</mat-label>
+            <input type="text" matInput [(ngModel)]="presentWorkingPlace" [matAutocomplete]="autoIfhrmsNo" (ngModelChange)="filterIfhrmsNo()" (keyup)="filterIfhrmsNo()"/>
+            <mat-autocomplete #autoIfhrmsNo="matAutocomplete" (optionSelected)="selectItempresentWorkingPlace($event.option.value)">
+              <mat-option *ngFor="let item of filteredListIfhrmsNo" [value]="item.presentWorkingPlace">{{ item.presentWorkingPlace }}</mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Stage Of PR</mat-label>
+            <mat-select [(value)]="pendingSequenceId" (selectionChange)="onFieldSelect($event.value)">
+              <mat-option value="1">SCN Approved Date</mat-option>
+              <mat-option value="2">SCN Acknowledged Date</mat-option>
+              <mat-option value="3">Date of Explanation</mat-option>
+              <mat-option value="4">Date of Final Order</mat-option>
+              <mat-option value="5">Completed Sequence</mat-option>
+              <mat-option (click)="allList()">All Sequences</mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Select Mobile No</mat-label>
+            <input type="number" matInput [matAutocomplete]="autoMobileNo" />
+            <mat-autocomplete #autoMobileNo="matAutocomplete" (optionSelected)="selectItems($event.option.value)">
+              <mat-option *ngFor="let item of filteredListIfhrmsNo" [value]="item.mobileNo">{{ item.mobileNo }}</mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Select Date Of Birth</mat-label>
+            <input type="text" matInput [matAutocomplete]="autoDob" (ngModelChange)="filterIfhrmsNo()" />
+            <mat-autocomplete #autoDob="matAutocomplete" (optionSelected)="selectItems($event.option.value)">
+              <mat-option *ngFor="let item of filteredListIfhrmsNo" [value]="item.dateofbirth">{{ item.dateofbirth }}</mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+  
+          <div class="search-icon-container" [@clickAnimation]="isClicked ? 'active' : 'inactive'">
+            <img  matTooltipPosition="above" matTooltip="Click for combination search" src="/search.svg" (click)="onSearch()" alt="Search">
+            <div class="combinationSearch">Combination Search</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="dataSource.data.length > 0; else noData">
+
+      <!-- PR no Column -->
+
+      <ng-container matColumnDef="SNo">
+        <th mat-header-cell *matHeaderCellDef> SNO </th>
+        <td mat-cell *matCellDef="let row; let i = index"> {{ i + 1 }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="prSectionNo">
+        <th mat-header-cell *matHeaderCellDef> Section</th>
+        <td mat-cell *matCellDef="let element"> {{element.prSectionNo}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="prNo">
+        <th mat-header-cell *matHeaderCellDef> PR No </th>
+        <td mat-cell *matCellDef="let element"> {{element.prNo}}/{{element.year}}/{{element.unitShortcode}}</td>
+      </ng-container>
+
+      <!-- Section Column -->
+      <!-- <ng-container matColumnDef="section">
+        <th mat-header-cell *matHeaderCellDef> Section </th>
+        <td mat-cell *matCellDef="let element"> {{element.prSectionNo}} </td>
+      </ng-container> -->
+
+      <ng-container matColumnDef="year">
+        <th mat-header-cell *matHeaderCellDef> Year </th>
+        <td mat-cell *matCellDef="let element">  </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="shortcode">
+        <th mat-header-cell *matHeaderCellDef> Unit </th>
+        <td mat-cell *matCellDef="let element">  </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.delnquenceName}} </td>
+      </ng-container>
+
+ <!-- IFHRMS No Column -->
+ <ng-container matColumnDef="ifhrmsNo">
+  <th mat-header-cell *matHeaderCellDef> IFHRMS No </th>
+  <td mat-cell *matCellDef="let element"> {{element.ifhrmsNo}} </td>
+</ng-container>
+
+      <!-- Rank Column -->
+      <ng-container matColumnDef="rank">
+        <th mat-header-cell *matHeaderCellDef> Rank </th>
+        <td mat-cell *matCellDef="let element"> {{element.delnquenceRankMaster}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="rankNo">
+        <th mat-header-cell *matHeaderCellDef> Rank No</th>
+        <td mat-cell *matCellDef="let element"> {{element.delnquenceRankNo}} </td>
+      </ng-container>
+
+      <!-- Date of Birth Column -->
+      <ng-container matColumnDef="dob">
+        <th mat-header-cell *matHeaderCellDef> Date of Birth </th>
+        <td mat-cell *matCellDef="let element"> {{element.dateOfBirth | date}} </td>
+      </ng-container>
+
+      <!-- Date of Enlistment Column -->
+      <ng-container matColumnDef="doe">
+        <th mat-header-cell *matHeaderCellDef> Date of Enlistment </th>
+        <td mat-cell *matCellDef="let element"> {{element.dateOfEnlishment | date}} </td>
+      </ng-container>
+
+      <!-- Date of Retirement Column -->
+      <ng-container matColumnDef="dor">
+        <th mat-header-cell *matHeaderCellDef> Date of Retirement </th>
+        <td mat-cell *matCellDef="let element"> {{element.dateOfRetiredment | date}} </td>
+      </ng-container>
+
+      <!-- District Column -->
+      <!-- <ng-container matColumnDef="district">
+        <th mat-header-cell *matHeaderCellDef> District </th>
+        <td mat-cell *matCellDef="let element"> {{element.district}} </td>
+      </ng-container> -->
+
+      
+
+      <!-- Working Place Column -->
+      <ng-container matColumnDef="workingPlace">
+        <th mat-header-cell *matHeaderCellDef> Working Place </th>
+        <td mat-cell *matCellDef="let element"> {{element.presentWorkingPlace}} </td>
+      </ng-container>
+
+      <!-- Joining Date Column -->
+      <ng-container matColumnDef="joiningDate">
+        <th mat-header-cell *matHeaderCellDef> Joining Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.dateOfJoiningInPresentPost | date}} </td>
+      </ng-container>
+
+      <!-- Mobile No Column -->
+      <ng-container matColumnDef="mobileNo">
+        <th mat-header-cell *matHeaderCellDef> Mobile No </th>
+        <td mat-cell *matCellDef="let element"> {{element.mobileNo}} </td>
+      </ng-container>
+
+      <!-- No. of PR Column -->
+      <ng-container matColumnDef="noOfPR">
+        <th mat-header-cell *matHeaderCellDef> No. of PR so for </th>
+        <td mat-cell *matCellDef="let element"> {{element.noOfPRsofar}} </td>
+      </ng-container>
+
+      <!-- Date of Occurrence Column -->
+      <ng-container matColumnDef="dateOfOccurrence">
+        <th mat-header-cell *matHeaderCellDef> Date of Occurrence </th>
+        <td mat-cell *matCellDef="let element"> {{element.dateOfOccurance | date}} </td>
+      </ng-container>
+
+      <!-- Place of Occurrence Column -->
+      <ng-container matColumnDef="placeOfOccurrence">
+        <th mat-header-cell *matHeaderCellDef> Place of Occurrence </th>
+        <td mat-cell *matCellDef="let element"> {{element.placeOfOccurance}} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="currentPendingSequenceName">
+        <th mat-header-cell *matHeaderCellDef>Stage Of PR</th>
+        <td mat-cell *matCellDef="let element"> {{element.currentPendingSequenceName}} </td>
+      </ng-container>
+      <!-- Delinquency Details Column -->
+      <!-- <ng-container matColumnDef="delinquencyDetails">
+        <th mat-header-cell *matHeaderCellDef> Delinquency Details </th>
+        <td mat-cell *matCellDef="let element"> {{element.delinquencyDetails.join(', ')}} </td>
+      </ng-container> -->
+
+      <ng-container matColumnDef="delinquencyDetails">
+        <th mat-header-cell *matHeaderCellDef> Count of Charges </th>
+        <td mat-cell *matCellDef="let element">
+          <!-- Use the method from the component to check if delinquencyDetails is an array -->
+          {{ isArray(element.delinquencyDetails) && element.delinquencyDetails.length > 0
+          ? element.delinquencyDetails.join(', ')
+          : 'No details available' }}
+        </td>
+      </ng-container>
+      
+
+      <!-- SCN Approved Date Column -->
+      <!-- <ng-container matColumnDef="scnApprovedDate">
+        <th mat-header-cell *matHeaderCellDef> SCN Approved Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.scnapprovedDate
+          | date}} </td>
+      </ng-container> -->
+
+      <!-- <ng-container matColumnDef="scnApprovedDateRemarks">
+        <th mat-header-cell *matHeaderCellDef> SCN Approved Remarks</th>
+        <td mat-cell *matCellDef="let element"> {{element.
+          scnapprovedDateRemarks}} </td>
+      </ng-container> -->
+
+
+
+      <!-- <ng-container matColumnDef="scnApprovedDateUploadFile">
+        <th mat-header-cell *matHeaderCellDef> SCN Approved Upload File </th>
+        <td mat-cell *matCellDef="let element"> {{element.scnapprovedDateFileName
+          }} </td>
+      </ng-container> -->
+
+      <!-- SCN Ack Date Column -->
+      <!-- <ng-container matColumnDef="scnAckDate">
+
+        <th mat-header-cell *matHeaderCellDef> SCN Ack Date </th>
+        <td mat-cell *matCellDef="let element"> {{ element.sCNApprovedDate | date: 'dd/MM/yyyy' }}</td>
+      </ng-container> -->
+<!-- 
+      <ng-container matColumnDef="scnAckDateRemarks">
+        <th mat-header-cell *matHeaderCellDef> SCN Acknowledge Remarks</th>
+        <td mat-cell *matCellDef="let element"> {{element.sCNAckDateRemarks }} </td>
+      </ng-container> -->
+
+      <!-- <ng-container matColumnDef="scnAckDateUploadFile">
+        <th mat-header-cell *matHeaderCellDef> SCN Acknowledge Upload File</th>
+        <td mat-cell *matCellDef="let element"> {{element.sCNAckDateFileName
+          }} </td>
+      </ng-container> -->
+
+      <!-- Date of Explanation Column -->
+      <!-- <ng-container matColumnDef="dateOfExplanation">
+        <th mat-header-cell *matHeaderCellDef> Date of Explanation </th>
+        <td mat-cell *matCellDef="let element"> {{element.dateOfExplanation | date}} </td>
+      </ng-container> -->
+
+<!-- 
+      <ng-container matColumnDef="dateOfExplanationRemarks">
+        <th mat-header-cell *matHeaderCellDef> Date of Explanation Remarks</th>
+        <td mat-cell *matCellDef="let element"> {{element.dateOfExplanationRemark}} </td>
+      </ng-container> -->
+
+<!-- 
+      <ng-container matColumnDef="dateOfExplanationUploadFile">
+        <th mat-header-cell *matHeaderCellDef> Date of Explanation Upload File</th>
+        <td mat-cell *matCellDef="let element"> {{element.
+          dateOfExplanationFileName}} </td>
+      </ng-container> -->
+
+      <!-- Date of Final Order Column -->
+      <!-- <ng-container matColumnDef="dateOfFinalOrder">
+        <th mat-header-cell *matHeaderCellDef> Date of Final Order </th>
+        <td mat-cell *matCellDef="let element"> {{element.dateOfFinalOrder | date}} </td>
+      </ng-container> -->
+<!-- 
+      <ng-container matColumnDef="dateOfFinalOrderRemarks">
+        <th mat-header-cell *matHeaderCellDef> Date of Final Remarks</th>
+        <td mat-cell *matCellDef="let element"> {{element.dateOfFinalOrderRemark}} </td>
+      </ng-container> -->
+
+<!-- 
+      <ng-container matColumnDef="dateOfFinalOrderUploadFile">
+        <th mat-header-cell *matHeaderCellDef> Date of Final Upload File</th>
+        <td mat-cell *matCellDef="let element"> {{element.dateOfFinalOrderFileName
+          }} </td>
+      </ng-container> -->
+
+      <!-- Details of Punishment Column -->
+      <!-- <ng-container matColumnDef="detailsOfPunishment">
+        <th mat-header-cell *matHeaderCellDef> Details of Punishment </th>
+        <td mat-cell *matCellDef="let element"> {{element.detailsOfPunishment}} </td>
+      </ng-container> -->
+
+      <!-- <ng-container matColumnDef="detailsOfPunishmentRemarks">
+        <th mat-header-cell *matHeaderCellDef> Details of Punishment Remarks</th>
+        <td mat-cell *matCellDef="let element"> {{element.detailsOfPunishment}} </td>
+      </ng-container> -->
+
+      <!-- <ng-container matColumnDef="detailsOfPunishmentUploadFile">
+        <th mat-header-cell *matHeaderCellDef> Details of Punishment Upload File</th>
+        <td mat-cell *matCellDef="let element"> {{element.detailsOfPunishmentFileName
+          }} </td>
+      </ng-container> -->
+
+      <!-- Remarks Column -->
+      <!-- <ng-container matColumnDef="remarks">
+        <th mat-header-cell *matHeaderCellDef> Remarks </th>
+        <td mat-cell *matCellDef="let element"> {{element.remarks}} </td>
+      </ng-container> -->
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element">
+
+          <!-- <button mat-icon-button color="primary" (click)="onEdit(element.minorPrId)">
+
+            <mat-icon matTooltipPosition="above" matTooltip="Edit">edit</mat-icon> -->
+             
+          <button *ngIf="isEditButtonDisabled" mat-icon-button color="primary" (click)="onEdit(element.minorPrId, element.prSectionNo)">
+            <mat-icon>edit</mat-icon>
+
+          </button>
+         
+          <!-- <button mat-icon-button color="accent" (click)="onView(element.minorPrId)"> -->
+            <button mat-icon-button color="accent" (click)="onView(element.minorPrId)">
+            <mat-icon matTooltipPosition="above" matTooltip="View">visibility</mat-icon>
+          </button>
+
+          <button mat-icon-button color="accent" (click)="totalPRs(element.ifhrmsNo)">
+            <mat-icon matTooltipPosition="above" matTooltip="Total PR">group_add</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Header and Row -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'highlight-row': row.minorPrId === lastModifiedId}"></tr>
+    </table>
+
+    <ng-template #noData>
+      <div class="empty-state">
+        <div class="confused-face">
+          <div class="face">
+            <div class="eyes">
+              <div class="eye"></div>
+              <div class="eye"></div>
+            </div>
+            <div class="mouth"></div>
+          </div>
+        </div>
+        <h3 class="empty-title">No Data Found</h3>
+      </div>
+    </ng-template>
+    
+  </div>
+  <!-- Pagination -->
+  <div class="paginator-container">
+    <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+
+  <div class="container mt-3 text-start custom_sty">
+    <button class="btn btn-secondary btn-sm btn_width" (click)="goBack()">Back</button>
+  </div>
+</div>
+

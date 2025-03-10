@@ -1,0 +1,174 @@
+<div style="height: 100vh;">
+<app-static-header></app-static-header>
+<div class="table-wrapper">
+  <div class="table-title">
+    <h1>Existing PR Details</h1>
+   
+  </div>
+<div>
+  <h1>Deliquence Details</h1>
+  <h3>Name:{{name}} / Rank:{{delnquenceRankMaster}} / PrSectionNo:{{prSectionNo}}</h3>
+</div>
+  <div class="table-container">
+    <!-- Minor Punishments Table -->
+    <div class="table-section">
+      <h2>Minor Punishments</h2>
+      <div class="table-scroll-wrapper">
+        <table mat-table [dataSource]="elementData" class="mat-elevation-z8">
+          <!-- Define columns -->
+          <ng-container matColumnDef="SNo">
+            <th mat-header-cell *matHeaderCellDef> SNo </th>
+            <td mat-cell *matCellDef="let row; let i = index"> {{ i + 1 }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="prNo">
+            <th mat-header-cell *matHeaderCellDef> PR No </th>
+            <td mat-cell *matCellDef="let elementData"> {{elementData.prNo}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="year">
+            <th mat-header-cell *matHeaderCellDef> Year </th>
+            <td mat-cell *matCellDef="let elementData"> {{elementData.year}} </td>
+          </ng-container>
+
+          <!-- <ng-container matColumnDef="section">
+            <th mat-header-cell *matHeaderCellDef> Section </th>
+            <td mat-cell *matCellDef="let elementData"> {{elementData.prSectionNo}} </td>
+          </ng-container> -->
+
+          <!-- <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let elementData"> {{elementData.delnquenceName}} </td>
+          </ng-container> -->
+
+          <ng-container matColumnDef="unitShortcode">
+            <th mat-header-cell *matHeaderCellDef> Unit </th>
+            <td mat-cell *matCellDef="let elementData"> {{elementData.unitShortcode}} </td>
+          </ng-container>
+
+          <!-- <ng-container matColumnDef="rank">
+            <th mat-header-cell *matHeaderCellDef> Rank </th>
+            <td mat-cell *matCellDef="let elementData"> {{elementData.delnquenceRankMaster}} </td>
+          </ng-container> -->
+
+            <ng-container matColumnDef="currentPendingSequenceName">
+            <th mat-header-cell *matHeaderCellDef> stage ofPR </th>
+            <td mat-cell *matCellDef="let elementData"> {{elementData.currentPendingSequenceName}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="rankNo">
+            <th mat-header-cell *matHeaderCellDef> Rank No</th>
+            <td mat-cell *matCellDef="let elementData">
+              <ng-container *ngIf="elementData.delnquenceRankNo">
+                {{ elementData.delnquenceRankNo }}
+              </ng-container>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="accent" (click)="onView(element.minorPrId)">
+                <mat-icon matTooltipPosition="above" matTooltip="View">visibility</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+
+
+            <!-- <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element"> -->
+
+        <!-- <button mat-icon-button color="primary" (click)="onEdit(element.minorPrId)">
+
+          <mat-icon matTooltipPosition="above" matTooltip="Edit">edit</mat-icon> -->
+
+        <!-- <button mat-icon-button color="primary" (click)="onEdit(element.minorPrId, element.prSectionNo)">
+          <mat-icon>edit</mat-icon>
+
+        </button>
+        <button mat-icon-button color="accent" (click)="onView(element.minorPrId)">
+          <mat-icon matTooltipPosition="above" matTooltip="View">visibility</mat-icon>
+        </button>
+
+        <button mat-icon-button color="accent" (click)="totalPRs(element.ifhrmsNo)">
+          <mat-icon matTooltipPosition="above" matTooltip="Total PR">group_add</mat-icon>
+        </button>
+      </td>
+    </ng-container> -->
+
+          <!-- Table Rows -->
+          <tr mat-header-row *matHeaderRowDef="minorDisplayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: minorDisplayedColumns;"></tr>
+        </table>
+      </div>
+      <mat-paginator #minorPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+
+    <!-- Major Punishments Table -->
+    <div class="table-section">
+      <h2>Major Punishments</h2>
+      <div class="table-scroll-wrapper">
+        <table mat-table [dataSource]="majorDataSource" class="mat-elevation-z8">
+          <!-- Define columns -->
+          <ng-container matColumnDef="SNo">
+            <th mat-header-cell *matHeaderCellDef> SNo </th>
+            <td mat-cell *matCellDef="let row; let i = index"> {{ i + 1 }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="prNo">
+            <th mat-header-cell *matHeaderCellDef> PR No </th>
+            <td mat-cell *matCellDef="let element"> {{element.prNo}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="year">
+            <th mat-header-cell *matHeaderCellDef> Year </th>
+            <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="section">
+            <th mat-header-cell *matHeaderCellDef> Section </th>
+            <td mat-cell *matCellDef="let element"> {{element.section}} </td>
+          </ng-container>
+
+          <!-- <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container> -->
+
+          <ng-container matColumnDef="unitShortcode">
+            <th mat-header-cell *matHeaderCellDef> Unit </th>
+            <td mat-cell *matCellDef="let element"> {{element.unitShortcode}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="rank">
+            <th mat-header-cell *matHeaderCellDef> Rank </th>
+            <td mat-cell *matCellDef="let element"> {{element.delnquenceRankMaster}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="rankNo">
+            <th mat-header-cell *matHeaderCellDef> Rank No</th>
+            <td mat-cell *matCellDef="let elementData"> {{elementData.delnquenceRankNo}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-button (click)="viewDetails(row)">View</button>
+            </td>
+          </ng-container>
+
+          <!-- Table Rows -->
+          <tr mat-header-row *matHeaderRowDef="majorDisplayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: majorDisplayedColumns;"></tr>
+        </table>
+      </div>
+      <mat-paginator #majorPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</div>
+<div class="custom_sty">
+  <button class="btn_width" (click)="goBack()">Back</button>
+</div>
+</div>

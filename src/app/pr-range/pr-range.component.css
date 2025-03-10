@@ -1,0 +1,147 @@
+  .pr-range-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+  /* margin-top: 14vh; */
+  }
+  
+  .card-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+  }
+  
+  .card {
+    width: 180px; /* Ensures uniform card width */
+    min-height: 120px;
+    padding: 16px;
+    text-align: center;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  
+  /* Unique dull colors for each card */
+  .card-kancheepuram {
+    background-color: #d9c19f;
+    color: black;
+  }
+  
+  .card-trichy {
+    background-color: #c9a7a7;
+    color: black;
+  }
+  
+  .card-madurai {
+    background-color: #b6d7a8;
+    color: black;
+  }
+  
+  .card-coimbatore {
+    background-color: #a4c2f4;
+    color: black;
+  }
+  
+  .card-chennai {
+    background-color: #b4a7d6;
+    color: black;
+  }
+  
+  .card-villupuram {
+    background-color: #d5a6bd;
+    color: black;
+  }
+  
+  .card-default {
+    background-color: #ddd;
+    color: black;
+  }
+
+  .card-color {
+    background-color: #b3cccc;
+  }
+  
+  /* Hover effect */
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+
+  /* pr-counts css*/
+
+  .row-layout {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: nowrap; 
+  }
+
+  .cards-section {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    /* width: 100%; */
+    padding: 24px;
+  }
+
+
+  .card-green {
+    background-color: #A5D6A7;
+    color: black;
+  }
+  
+  .card-blue {
+    background-color: #90CAF9;
+    color: black;
+  }
+  
+  .card-yellow {
+    background-color: #FFE082;
+    color: black;
+  }
+  
+  .card-red {
+    background-color: #FFAB91;
+    color: black;
+  }
+
+  .card-skyblue {
+    background-color: #90e6de; 
+    color: black; 
+  }
+  
+  .card-gray{
+    background-color: #d3d3d3; 
+    color: black; 
+  }
+  
+  .fontsty {
+    font-size: 22px;
+    font-weight: 500;
+  }
+
+  .dashboard-header1 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 0;
+    color: #333;
+    margin-top: 10vh;
+    margin-bottom: 40px;
+  }
+  .dashboard-header2 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 0;
+    color: #333;
+  }
+
+  .selected-card {
+    border: 2px solid #007BFF !important; /* Blue border */
+    background: rgba(0, 123, 255, 0.1) !important; /* Light blue background */
+    box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.3);
+  }

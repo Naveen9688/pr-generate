@@ -1,0 +1,290 @@
+<!----------------new pr generate--------------------->
+
+<div style="height: 100vh;">
+<app-static-header></app-static-header>
+<div class="pr_details_container">
+<div class="container mt-5" *ngIf="showNewPR">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h1>Enter New PR No</h1>
+        </div>
+        <div class="card-body">
+          <form #prForm="ngForm" (ngSubmit)="onSubmitNew(prForm)">
+            <div class="mb-5">
+             
+              <div class="d-flex">
+                <input type="text" id="number" class="form-control pr-field" [(ngModel)]="newprNumber" name="number" required readonly="true"
+                  placeholder="PR Number" />
+                <span class="slash">/</span>
+                <input type="number" id="year" class="form-control pr-field" [(ngModel)]="newprYear" name="year" required 
+                  placeholder="Year" [value]="currentYear" (input)="onYearChange($event)" />
+                <span class="slash">/</span>
+
+                <!-- City Field -->
+                <input type="text" id="city" class="form-control pr-field" [(ngModel)]="newprCity" name="city" required readonly="false"
+                  placeholder="District/City/Special Units" />
+              </div>
+            </div> 
+            <button type="submit" class="btn btn-primary">
+              Generate 
+            </button>
+          </form>
+        </div>
+      </div>
+      <div *ngIf="newprGenerated" class="alert alert-success mt-3">
+        <strong>PR No:</strong> {{ newgeneratedPrNo }}
+      </div>
+
+       <div *ngIf="Message" class="alert alert-success mt-3">
+        <strong>Message:</strong> {{ generatedPrNo }}
+      </div>
+      <div *ngIf="messagess" class="alert alert-success mt-3">
+        <strong></strong> {{ messagess }}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End -->
+
+
+<!-- One Time Entry of Last PR -->
+
+<div class="container mt-5" *ngIf="showCurrentPR">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h1>One Time Entry of Current PR</h1>
+        </div>
+        <div class="card-body">
+          <form #prForm="ngForm" (ngSubmit)="onSubmitCurrent(prForm)">
+            <div class="mb-5">
+              <!-- <label for="prNo" class="form-label">PR No</label> -->
+              <div class="d-flex">
+
+                <!-- Number Field -->
+                <input type="number" id="number" class="form-control pr-field" [(ngModel)]="prNumber" name="number" required
+                  placeholder="PR Number" min="1" />
+                <span class="slash">/</span>
+
+                <!-- Year Field -->
+                <!-- <input type="number" id="year" class="form-control pr-field" [(ngModel)]="newprYear" name="year" required
+                  placeholder="Year" min="1000" max="9999" minlength="4" maxlength="4" /> -->
+
+                  <input type="number" id="year" class="form-control pr-field" [(ngModel)]="newprYear" name="year" required 
+                  placeholder="Year" [value]="currentYear" (input)="onYearChange($event)" />
+                <span class="slash">/</span>
+
+                <!-- City Field -->
+                <input type="text" id="city" class="form-control pr-field" [(ngModel)]="newprCity" name="city" required readonly="false"
+                  placeholder="District/City/Special Units" />
+              </div>
+            </div> 
+            <button type="submit" class="btn btn-primary">
+              Add
+            </button>
+          </form>
+        </div>
+      </div>
+      <div *ngIf="prGenerated" class="alert alert-success mt-3">
+        <strong>PR No:</strong> {{ generatedPrNo }}
+      </div>
+      <div *ngIf="Message" class="alert alert-success mt-3">
+        <strong>Message:</strong> {{ generatedPrNo }}
+      </div>
+      <div *ngIf="messagess" class="alert alert-success mt-3">
+        <strong></strong> {{ messagess }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End -->
+
+
+
+
+
+<!--------------- Existing Old PR's ----------------->
+
+<div class="container mt-5" *ngIf="showExistingPR">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <div class="exispr_card">
+          <div class="card-header bg-primary text-white">
+            <h1>Enter Previous/Current Year Old PRs</h1>
+          </div>
+          <div class="card-body">
+
+            <!-- <form #prForm="ngForm" (ngSubmit)="onSubmit(prForm)"> -->
+              <!-- Year Dropdown -->
+              <div class="mb-5">
+                <div class="custom-dropdown">
+                  <label for="yearSelect" class="form-label">Select Year&nbsp;&nbsp;&nbsp;</label>
+                  <select id="yearSelect" class="form-select d-inline-block w-auto" 
+                    [(ngModel)]="existselectedYear" 
+                    (ngModelChange)="onYearChanges($event)">
+                
+                    <!-- Default Option -->
+                    <option [ngValue]="null" disabled>Select Year</option>
+                
+                    <!-- List of Years from prList -->
+                    <option *ngFor="let year of existyears" [ngValue]="year">
+                      {{ year }}
+                    </option>
+                  </select>
+                </div>
+                <br>
+
+
+                <!-- Horizontal fields: PR No, Year, and City -->
+
+          <div class="row mb-4">
+            <!-- <div class="col"> -->
+               <label for="prNo" class="exispr_label">PR No</label> 
+              <select id="prNo" class="form-control" [(ngModel)]="existprNo" >
+                <option *ngFor="let pr of existprNoList" [value]="pr">{{ pr }}</option>
+              </select>
+              <span class="slash">/</span>
+            <!-- </div> -->
+            <!-- <div class="col"> -->
+
+              <label for="yearField" class="form-label">Year</label>
+              <input id="yearField" type="text" class="form-control"  [value]="existselectedYear" readonly="false" />
+
+              <!-- <label for="yearField" class="form-label">Year</label> -->
+<!--               <input id="yearField" type="text" class="form-control" [value]="existselectedYear" placeholder="Year" readonly="false" /> -->
+
+              <span class="slash">/</span>
+            <!-- </div> -->
+            <!-- <div class="col"> -->
+              <!-- <label for="city" class="form-label">City</label> -->
+              <input id="city" type="text" class="form-control" [value]="newprCity" placeholder="City" readonly="false"  />
+            <!-- </div> -->
+          </div>
+
+
+          <!-- Button to Add PR -->
+          <div class="text-center">
+            <button class="btn btn-success w-100" (click)="addPR()">Add PR</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Display Generated PR Number -->
+    <div *ngIf="newprGenerated" class="alert alert-success">
+     <strong>Generated PR No:</strong> 
+     {{ existprNo || 'PRNo' }}/{{ existselectedYear || 'Year' }}/{{ newprCity }}
+   </div>
+   <div *ngIf="Message" class="alert alert-success mt-3">
+     <strong>Message:</strong> {{ generatedPrNo }}
+   </div>
+   <div *ngIf="messagess" class="alert alert-success mt-3">
+    <strong></strong> {{ messagess }}
+  </div>
+  </div>
+</div>
+</div>
+<div class="pr_se_container centered-content" *ngIf="!totalPRCount">
+        <h1 class="mb-4">PR Details</h1>
+
+        <div class="row">
+            <!-- Minor Punishment Section -->
+            <div class="col-md-6 mb-4">
+                <div class="punishment-category">
+                    <h3 class="punishment-title">Minor Punishment</h3>
+                    <div class="punishment-buttons">
+                        <button class="btn btn-success m-2" (click)="onNavigate('3a')"  >3A</button>
+                        <button class="btn btn-success m-2" (click)="onNavigate('17a')" >17A</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Major Punishment Section -->
+            <div class="col-md-6 mb-4">
+                <div class="punishment-category">
+                    <h3 class="punishment-title">Major Punishment</h3>
+                    <div class="punishment-buttons">
+                        <button class="btn btn-danger m-2" (click)="onMajorNavigate('3b')" >3B</button>
+                        <button class="btn btn-danger m-2" (click)="onMajorNavigate('17b')" >17B</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+<!---------------- total count of existing prs ------------->
+
+<div class="totalprcontainer" *ngIf="totalPRCount">
+  <h1 class="title">Enter Total Count PR Count For Previous Years</h1>
+
+  <!-- Form Section -->
+  <form [formGroup]="TotalPrForm" (ngSubmit)="TotalCountaddPR()">
+    <div class="form-row">
+      <!-- Year Dropdown -->
+      <mat-form-field appearance="outline">
+        <mat-label>Select Year</mat-label>
+        <mat-select formControlName="years">
+          <mat-option *ngFor="let years of TotalPRCount_years" [value]="years.toString()" [disabled]="isYearAlreadyAdded(years)">
+            {{ years }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- PR No Input -->
+      <mat-form-field appearance="outline">
+        <mat-label>Last PR No of the Year</mat-label>
+        <input matInput type="number" formControlName="exprno" min="1" required />
+      </mat-form-field>
+
+      <!-- Add Button -->
+    </div>
+    <button class="totalpr_Add" mat-raised-button color="primary" type="submit" [disabled]="TotalPrForm.invalid">
+      {{ editingIndex !== null ? 'Update' : 'Add' }}
+    </button>
+  </form>
+<br>
+  <!-- Table Section -->
+   <div class="table-container" >
+  <table mat-table [dataSource]="prList" class="mat-elevation-z8">
+    
+    <!-- Year Column -->
+    <ng-container matColumnDef="totalyear">
+      <th mat-header-cell *matHeaderCellDef>Year</th>
+      <td mat-cell *matCellDef="let element">{{ element.years }}</td>
+    </ng-container>
+
+    <!-- PR No Column -->
+    <ng-container matColumnDef="totalPrNo">
+      <th mat-header-cell *matHeaderCellDef>Total PR Count for the Year</th>
+      <td mat-cell *matCellDef="let element">{{ element.exprno }}</td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let element">
+        <button class="action_btn" mat-icon-button color="accent" (click)="editPR(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['totalyear', 'totalPrNo', 'actions']"></tr>
+    <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr> -->
+    <tbody class="scrollable-body">
+      <tr mat-row *matRowDef="let row; columns: ['totalyear', 'totalPrNo', 'actions'];"></tr>
+    </tbody>
+  </table>
+ </div>
+</div>
+
+<div class="container mt-3 text-start custom_sty">
+  <button class="section_back_btn btn btn-secondary btn-sm btn_width" (click)="goBack()">Back</button>
+</div>
+
+</div>
+</div>

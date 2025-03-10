@@ -1,0 +1,43 @@
+
+<div class="login-page">
+  <!-- <img src="/assets/background.jpg" alt=""> -->
+  <div class="login-container">
+    <div class="profile-icon">
+      <img src="pr_logo.ico" alt="PR Logo" class="logo">
+    </div>
+    <h1 class="login-title">PR No Generator</h1>
+    <h1 class="login-title">LOGIN</h1>
+    <form class="login-form" (ngSubmit)="onLogin()">
+      <div class="form-group">
+        <label for="username">
+          <mat-icon>person</mat-icon> Username
+        </label>
+        <input
+          type="text"
+          id="username"
+          [(ngModel)]="username"
+          name="username"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">
+          <mat-icon>lock</mat-icon> Password
+        </label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="password"
+          name="password"
+          required
+        />
+      </div>
+      <button type="submit" class="login-button">
+        <mat-icon>login</mat-icon> Login
+      </button>
+    </form>
+    <p class="forgot-password">
+      Forgot password? <a href="/forgot-password">Click here</a>
+    </p>
+  </div>
+</div>

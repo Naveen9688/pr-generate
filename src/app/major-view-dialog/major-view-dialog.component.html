@@ -1,0 +1,24 @@
+<h1 mat-dialog-title class="dialog-title">View Details</h1>
+<div mat-dialog-content class="dialog-content">
+  <table class="details-table">
+    <tr *ngFor="let field of fields">
+      <td class="field-label">{{ field.label }}</td>
+      <td class="field-value">
+        <div *ngIf="field.key === 'countOfChargeslist'; else defaultValue">
+          <ul>
+            <li *ngFor="let charge of elementData?.countOfChargeslist">
+              {{ charge.prCountofCharges }} |
+              <!-- <strong>Amount:</strong> ₹{{ charge.prCountofCharges }} -->
+            </li>
+          </ul>
+        </div>
+        <ng-template #defaultValue>
+          {{ formatValue(elementData?.[field.key], field.key) }}
+        </ng-template>
+      </td>
+    </tr>
+  </table>
+</div>
+<div mat-dialog-actions>
+  <button class="dialog-actions" mat-button mat-dialog-close>Close</button>
+</div>

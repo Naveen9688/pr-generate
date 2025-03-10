@@ -1,0 +1,74 @@
+<!-- <h1 mat-dialog-title class="dialog-title">View Details</h1>
+<div mat-dialog-content class="dialog-content">
+  <table class="details-table">
+    <tr *ngFor="let field of fields">
+      <td class="field-label">{{ field.label }}</td>
+      <td class="field-value">{{ formatValue(elementData?.[field.key], field.key) }}</td>
+    </tr>
+  </table>
+</div>
+
+
+<div mat-dialog-actions>
+  <button class="dialog-actions" mat-button mat-dialog-close>Close</button>
+</div>
+ -->
+
+
+
+
+ <!-- <h1 mat-dialog-title class="dialog-title">View Details</h1>
+<div mat-dialog-content class="dialog-content">
+  <table class="details-table">
+    <tr *ngFor="let field of fields">
+      <td class="field-label">{{ field.label }}</td>
+      <td class="field-value">{{ formatValue(elementData?.[field.key], field.key) }}</td>
+    </tr>
+
+    <tr>
+      <td class="field-label">Count of Charges</td>
+      <td class="field-value">
+        <div *ngIf="elementData?.countOfChargeslist?.length; else noCharges">
+          <ul>
+            <li *ngFor="let charge of elementData.countOfChargeslist">
+              <strong>{{ charge.chargeName }}</strong>: ₹{{ charge.amount }}
+            </li>
+          </ul>
+        </div>
+        <ng-template #noCharges>No charges available</ng-template>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div mat-dialog-actions>
+  <button class="dialog-actions" mat-button mat-dialog-close>Close</button>
+</div> -->
+
+
+
+<h1 mat-dialog-title class="dialog-title">View Details</h1>
+<div mat-dialog-content class="dialog-content">
+  <table class="details-table">
+    <tr *ngFor="let field of fields">
+      <td class="field-label">{{ field.label }}</td>
+      <td class="field-value">
+        <div *ngIf="field.key === 'countOfChargeslist'; else defaultValue">
+          <ul>
+            <li *ngFor="let charge of elementData?.countOfChargeslist">
+              {{ charge.prCountofCharges }} | 
+              <!-- <strong>Amount:</strong> ₹{{ charge.prCountofCharges }} -->
+            </li>
+          </ul>
+        </div>
+        <ng-template #defaultValue>
+          {{ formatValue(elementData?.[field.key], field.key) }}
+        </ng-template>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div mat-dialog-actions>
+  <button class="dialog-actions" mat-button mat-dialog-close>Close</button>
+</div>

@@ -1,0 +1,1147 @@
+<app-static-header></app-static-header>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <div class="card">
+        <!-- <div class="card-header bg-primary text-white"> -->
+          <!-- <br> -->
+          <div class="prNo_title"> <u>Major PR : {{ selectedPunishment }} </u><br>PR No: {{ prNo }} {{crNo}} {{ exPr }} </div>
+        <!-- </div> -->
+        <div class="card-body">
+
+          <mat-stepper #stepper [linear]="true">
+
+            <!-- First Step: Delinquency Details -->
+            <mat-step [stepControl]="delinquentFormGroup">
+              <form [formGroup]="delinquentFormGroup">
+                <ng-template matStepLabel>Delinquent in Detail</ng-template>
+
+                <div class="form-row">
+
+                  <mat-form-field class="col-6">
+                    <mat-label>IFHRMS No</mat-label>
+                    <input matInput formControlName="ifhrmsNo" maxlength="11" (input)="onIfhrmsNoChange($event)" />
+                    <mat-error *ngIf="delinquentFormGroup.get('ifhrmsNo')?.hasError('required')">
+                      This field is required.
+                    </mat-error>
+                    <mat-error *ngIf="delinquentFormGroup.get('ifhrmsNo')?.hasError('pattern')">
+                      Must be a valid 11-digit number.
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="col-6">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="delnquenceName" [(ngModel)]="delnquenceName"
+                      [readonly]="isReadonly" />
+                    <mat-error *ngIf="delinquentFormGroup.get('delnquenceName')?.hasError('required')">
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                  <mat-form-field class="col-6">
+                    <mat-label>Rank</mat-label>
+                    <mat-select formControlName="delnquenceRankMasterId" [(value)]="delnquenceRankMasterId"
+                      (selectionChange)="Rankselect($event.value)">
+                      <mat-option *ngFor="let rank of ranklist" [value]="rank.rankid">
+                        {{ rank.rankname }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="delinquentFormGroup.get('delnquenceRankMasterId')?.hasError('required')">
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="col-6" *ngIf="showAdditionalFields">
+                    <mat-label>Rank No</mat-label>
+                    <input maxlength="5" matInput formControlName="delnquenceRankNo" />
+                    <mat-error
+                      *ngIf="delinquentFormGroup.get('delnquenceRankNo')?.hasError('required') || delinquentFormGroup.get('delnquenceRankNo')?.hasError('pattern')">
+                      This field is required and must be a valid 5-digit number
+                    </mat-error>
+                  </mat-form-field>
+
+
+                  <mat-form-field class="col-6" *ngIf="!showAdditionalFields">
+                    <mat-label>Date of Birth</mat-label>
+                    <input placeholder="DD/MM/YYYY" formControlName="dateOfBirth" [(ngModel)]="dateOfBirth" matInput
+                      [matDatepicker]="dobPicker" [matDatepickerFilter]="dateFilter"
+                      (dateChange)="onDateOfBirthChange($event)">
+                    <mat-datepicker-toggle matIconSuffix [for]="dobPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #dobPicker></mat-datepicker>
+                    <mat-error *ngIf="delinquentFormGroup.get('delnquenceName')?.hasError('required')">
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                  <mat-form-field class="col-6" *ngIf="showAdditionalFields">
+                    <mat-label>Date of Birth</mat-label>
+                    <input placeholder="DD/MM/YYYY" formControlName="dateOfBirth" [(ngModel)]="dateOfBirth" matInput
+                      [matDatepicker]="dobPicker" [matDatepickerFilter]="dateFilter"
+                      (dateChange)="onDateOfBirthChange($event)">
+                    <mat-datepicker-toggle matIconSuffix [for]="dobPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #dobPicker></mat-datepicker>
+                    <mat-error *ngIf="delinquentFormGroup.get('delnquenceName')?.hasError('required')">
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="col-6">
+                    <mat-label>Date of Enlistment</mat-label>
+                    <input placeholder="DD/MM/YYYY" formControlName="dateOfEnlishment" [(ngModel)]="dateOfEnlishment"
+                      matInput [matDatepicker]="doePicker" [min]="minEnlistmentDate" [max]="maxEnlishmentDatess"
+                      (dateChange)="onDateOfEnlistmentChange($event)">
+                    <mat-datepicker-toggle matIconSuffix [for]="doePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #doePicker></mat-datepicker>
+                    <mat-error *ngIf="delinquentFormGroup.get('dateOfEnlishment')?.hasError('required')">
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="col-6" *ngIf="!showAdditionalFields">
+                    <mat-label>Date of Retirement</mat-label>
+                    <input placeholder="DD/MM/YYYY" formControlName="dateOfRetiredment" matInput
+                      [matDatepicker]="dorPicker" [min]="minRetirementDate"  [max]="maxRetirementDate">
+                    <mat-datepicker-toggle matIconSuffix [for]="dorPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #dorPicker></mat-datepicker>
+                    <mat-error *ngIf="delinquentFormGroup.get('dateOfRetiredment')?.hasError('required')">
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                  <mat-form-field class="col-6" *ngIf="showAdditionalFields">
+                    <mat-label>Date of Retirement</mat-label>
+                    <input placeholder="DD/MM/YYYY" formControlName="dateOfRetiredment" matInput
+                      [matDatepicker]="dorPicker" [min]="minRetirementDate"  [max]="maxRetirementDate">
+                    <mat-datepicker-toggle matIconSuffix [for]="dorPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #dorPicker></mat-datepicker>
+                    <mat-error *ngIf="delinquentFormGroup.get('dateOfRetiredment')?.hasError('required')">
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="col-6">
+                    <mat-label>Present Working Place</mat-label>
+                    <mat-select formControlName="policeStationId" [(value)]="StationSelect"
+                      (selectionChange)="StationSelectChange($event.value)">
+                      <mat-option *ngFor="let station of stationList" [value]="station.stationMasterId">
+                        {{ station.stationName }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="delinquentFormGroup.get('policeStationId')?.hasError('required')">
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="col-6" *ngIf="!showAdditionalFields">
+                    <mat-label>Date of Joining in Present Post</mat-label>
+                    <input placeholder="DD/MM/YYYY" formControlName="dateOfJoiningInPresentPost" matInput
+                      [matDatepicker]="joiningDatePicker" [min]="minJoiningDate" [max]="maxJoiningDate"
+                      (dateChange)="onDateOfJoiningInPresentPost($event)">
+                    <mat-datepicker-toggle matIconSuffix [for]="joiningDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #joiningDatePicker></mat-datepicker>
+
+                    <!-- Required error message -->
+                    <mat-error *ngIf="delinquentFormGroup.get('dateOfJoiningInPresentPost')?.hasError('required')">
+                      This field is required
+                    </mat-error>
+
+                    <!-- Invalid joining date error message -->
+                    <mat-error *ngIf="delinquentFormGroup.get('dateOfJoiningInPresentPost')?.hasError('invalidJoiningDate')">
+                      The joining date must be after the enlistment date.
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                  <mat-form-field class="col-6" *ngIf="showAdditionalFields">
+                    <mat-label>Date of Joining in Present Post</mat-label>
+                    <input placeholder="DD/MM/YYYY" formControlName="dateOfJoiningInPresentPost" matInput
+                      [matDatepicker]="joiningDatePicker" [min]="minJoiningDate" [max]="maxJoiningDate"
+                      (dateChange)="onDateOfJoiningInPresentPost($event)">
+                    <mat-datepicker-toggle matIconSuffix [for]="joiningDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #joiningDatePicker></mat-datepicker>
+
+                    <!-- Required error message -->
+                    <mat-error *ngIf="delinquentFormGroup.get('dateOfJoiningInPresentPost')?.hasError('required')">
+                      This field is required
+                    </mat-error>
+
+                    <!-- Invalid joining date error message -->
+                    <mat-error *ngIf="delinquentFormGroup.get('dateOfJoiningInPresentPost')?.hasError('invalidJoiningDate')">
+                      The joining date must be after the enlistment date.
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="col-6" >
+                    <mat-label>Mobile No</mat-label>
+                    <input matInput formControlName="mobileNo" [(ngModel)]="mobileNo" maxlength="10" />
+                    <mat-error
+                      *ngIf="delinquentFormGroup.get('mobileNo')?.hasError('required') || delinquentFormGroup.get('mobileNo')?.hasError('pattern')">
+                      This field is required and must be a valid 10-digit number
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="col-6" *ngIf="!showAdditionalFields">
+                    <mat-label>No. of PR so far</mat-label>
+                    <input matInput formControlName="noOfPRsofar" [(ngModel)]="noOfPRsofar" type="number"
+                      readonly="true" />
+                    <mat-error *ngIf="delinquentFormGroup.get('noOfPRsofar')?.hasError('required')">
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                  <mat-form-field class="col-6" *ngIf="showAdditionalFields">
+                    <mat-label>No. of PR so far</mat-label>
+                    <input matInput formControlName="noOfPRsofar" [(ngModel)]="noOfPRsofar" type="number"
+                      readonly="true" />
+                    <mat-error *ngIf="delinquentFormGroup.get('noOfPRsofar')?.hasError('required')">
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="col-6">
+                    <mat-label>Date of Occurrence</mat-label>
+                    <input placeholder="DD/MM/YYYY" formControlName="dateOfOccurance" matInput
+                      [matDatepicker]="occurrencePicker" [min]="minOccDate" [max]="maxOccDate" (dateChange)="onDateOfOccurance($event)">
+                    <mat-datepicker-toggle matIconSuffix [for]="occurrencePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #occurrencePicker></mat-datepicker>
+                    <mat-error *ngIf="delinquentFormGroup.get('dateOfOccurance')?.hasError('required')">
+                      This field is required
+                    </mat-error>
+                    <mat-error *ngIf="delinquentFormGroup.get('dateOfOccurance')?.hasError('invalidOccuranceDate')">
+                      Date of Occurrence must be after the date of enlistment.
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="col-6" *ngIf="!showAdditionalFields">
+                    <mat-label>Place of Occurrence</mat-label>
+                    <input matInput formControlName="placeOfOccurance" />
+                    <mat-error *ngIf="delinquentFormGroup.get('placeOfOccurance')?.hasError('required')">
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                  <mat-form-field class="col-6" *ngIf="showAdditionalFields">
+                    <mat-label>Place of Occurrence</mat-label>
+                    <input matInput formControlName="placeOfOccurance" />
+                    <mat-error *ngIf="delinquentFormGroup.get('placeOfOccurance')?.hasError('required')">
+                      This field is required
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="col-6" *ngIf="showAdditionalFields">
+                    <mat-label>Count of Charges</mat-label>
+                    <div class="multi-input">
+                      <input matInput [formControl]="delinquencyDetailInput" placeholder="Add charge count" />
+                      <button mat-icon-button type="button" (click)="addDelinquencyDetail()">
+                        <mat-icon matTooltipPosition="above" matTooltip="Add">add</mat-icon>
+                      </button>
+                    </div>
+                    <mat-error *ngIf="delinquencyDetailInput.hasError('required')">
+                      This field is required
+                    </mat-error>
+                    <mat-error *ngIf="delinquencyDetailInput.hasError('maxlength')">
+                      Maximum length is 300 characters
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                  <mat-form-field class="col-6" *ngIf="!showAdditionalFields">
+                    <mat-label>Count of Charges</mat-label>
+                    <div class="multi-input">
+                      <input matInput [formControl]="delinquencyDetailInput" placeholder="Add charge count" />
+                      <button mat-icon-button type="button" (click)="addDelinquencyDetail()">
+                        <mat-icon matTooltipPosition="above" matTooltip="Add">add</mat-icon>
+                      </button>
+                    </div>
+                    <mat-error *ngIf="delinquencyDetailInput.hasError('required')">
+                      This field is required
+                    </mat-error>
+                    <mat-error *ngIf="delinquencyDetailInput.hasError('maxlength')">
+                      Maximum length is 300 characters
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <mat-card class="col-6" appearance="outlined">
+                  <mat-card-content>
+                    <div *ngIf="delinquencyDetails.length > 0">
+                      <div class="multi-list">
+                        <div *ngFor="let control of delinquencyDetails.controls; let i = index" class="row styled-row">
+                          <span class="value">{{ control.value.offence }}</span>
+                          <div class="buttons">
+                            <button mat-icon-button type="button" (click)="editDelinquencyDetail(i)">
+                              <mat-icon matTooltipPosition="above" matTooltip="Edit">edit</mat-icon>
+                            </button>
+                            <button mat-icon-button type="button" (click)="removeDelinquencyDetail(i)">
+                              <mat-icon matTooltipPosition="above" matTooltip="Delete">delete</mat-icon>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div *ngIf="delinquencyDetails.controls.length === 0">
+                      <p style="color: #55585f;">No charges added yet.</p>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+                <mat-error class="countchargeerror" *ngIf="delinquentFormGroup.hasError('minLengthArray', 'prchargesList')">
+                  At least one charge must be added.
+                </mat-error>
+
+
+                <div class="button-container">
+                  <div>
+                    <button mat-button matStepperNext>Next</button>
+                  </div>
+                  <button (click)="onSubmit()" mat-raised-button color="primary" class="submit-button"
+                    [disabled]="!delinquentFormGroup.valid">Submit</button>
+                </div>
+              </form>
+            </mat-step>
+    
+    <!-- Second Step: Update Sequence -->
+
+    <mat-step [stepControl]="updateSequenceFormGroup">
+      <form [formGroup]="updateSequenceFormGroup">
+        <ng-template matStepLabel>Update Sequence</ng-template>
+    
+        <!-- Form container -->
+        <div class="form-container">
+          <!-- Dropdown for selecting field -->
+          <mat-form-field class="form-field">
+            <mat-label>Select Field</mat-label>
+            <mat-select [(value)]="selectedField" (selectionChange)="onFieldSelect($event.value)">
+
+              <mat-option value="chargeMemoApprovedDate" selected>Charge Memo Approved Date</mat-option>
+              <mat-option value="chargeMemoAcknowledgedDate">Charge Memo Acknowledged Date</mat-option>
+              <mat-option value="dateOfDefenceStatement">Date of Defence Statement</mat-option>
+              <mat-option value="dateOfAppointmentOfEnquiryOfficer">Date of Appointment Of Enquiry Officer</mat-option>
+              <mat-option value="dateOfEnquiryOfficer">Date of Enquiry Officer</mat-option>
+              <mat-option value="dateOfMinutesDrawn">Date of Minutes Drawn</mat-option>
+              <mat-option value="dateOfFrCallingMemoAlongWithMinute">Date of FR Calling Memo Along With Minute</mat-option>
+              <mat-option value="dateOfServingOfMinute">Date of Serving of Minute</mat-option>
+              <mat-option value="dateOfFrFurnished">Date of FR Furnished</mat-option>
+              <mat-option value="dateOfFinalOrder">Date of Final Order</mat-option>
+              <mat-option value="appealOrder">Appeal / SMR</mat-option>
+              <mat-option value="revisionOrder">Revision Order</mat-option>
+              <mat-option value="reviewOrder">Review</mat-option>
+              <mat-option value="courtOrder">Court Direction</mat-option>
+            </mat-select>
+          </mat-form-field>
+    
+          <!-- Input fields based on the selected option -->
+            <div *ngIf="selectedField === 'chargeMemoApprovedDate'" class="form-field">
+          
+            <mat-form-field>
+                <mat-label>Charge Memo Approved Date</mat-label>
+                <input
+                  placeholder="DD/MM/YYYY"
+                  formControlName="chargeMemoApprovedDate"
+                  matInput
+                  [matDatepicker]="chargeMemoApprovedPicker" [min]="minchargeMemoApprovedSelectDate" [max]="maxchargeMemoApprovedSelectDate" (dateChange)="chargeMemoAcknowledgedDateChange($event)" 
+                />
+                <mat-datepicker-toggle matIconSuffix [for]="chargeMemoApprovedPicker"></mat-datepicker-toggle>
+                <mat-datepicker #chargeMemoApprovedPicker></mat-datepicker>
+                <mat-error *ngIf="updateSequenceFormGroup.get('chargeMemoApprovedDate')?.hasError('required')">
+                  This field is required
+                </mat-error>
+              </mat-form-field>
+  
+            <mat-form-field *ngIf="selectedField === 'chargeMemoApprovedDate'" class="col-6">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput formControlName="chargeMemoApprovedDateRemarks"></textarea>
+            </mat-form-field>
+
+            <div class="col-6" *ngIf="selectedField === 'chargeMemoApprovedDate'" class="form-field file-upload-container">
+                <mat-icon class="upload-icon">file_upload</mat-icon>
+                <mat-label>Upload File</mat-label>
+                <input type="file" accept="application/pdf" formControlName="chargeMemoApprovedDateUploadFile" (change)="onchargeMemoApprovedDateUploadFileSelected($event)" />
+                <div [ngClass]="fileUploadError ? 'error-message' : 'file-restriction'">
+                  <small>{{ fileUploadError || 'Only PDF files are allowed.' }}</small>
+
+                </div>
+                <div *ngIf="updateSequenceFormGroup.get('chargeMemoApprovedDateUploadFile')?.value">
+                  <p>Uploaded File: {{ updateSequenceFormGroup.get('chargeMemoApprovedDateUploadFile')?.value }}</p>
+                </div>
+                <button *ngIf="download1" mat-button (click)="downloadFilechargeMemoApprovedDateFile()">
+                  <mat-icon>download</mat-icon> Download
+                </button>
+              </div>
+              <mat-error class="countchargeerror"
+                *ngIf="updateSequenceFormGroup.get('chargeMemoApprovedDateUploadFile')?.hasError('required')">
+                This field is required
+              </mat-error>
+              <div class="btn_align">
+              <button (click)="onSubmit()" mat-raised-button color="primary"  class="submit-button" [disabled]="!isChargeMemoApprovedDateValid()">Submit</button>
+            </div>
+            </div>
+
+    
+          
+          <div *ngIf="selectedField === 'chargeMemoAcknowledgedDate'" class="form-field">
+            <mat-form-field>
+              <mat-label>Charge Memo Acknowledged Date</mat-label>
+              <input
+                placeholder="DD/MM/YYYY"
+                formControlName="chargeMemoAcknowledgedDate"
+                matInput
+                [matDatepicker]="chargeMemoAcknowledgedPicker" [min]="minchargeMemoAcknowledgedDateSelectDate" [max]="maxchargeMemoAcknowledgedDateSelectDate" (dateChange)="dateOfDefenceStatementChange($event)" 
+              />
+              <mat-datepicker-toggle matIconSuffix [for]="chargeMemoAcknowledgedPicker"></mat-datepicker-toggle>
+              <mat-datepicker #chargeMemoAcknowledgedPicker></mat-datepicker>
+              <mat-error *ngIf="updateSequenceFormGroup.get('chargeMemoAcknowledgedDate')?.hasError('required')">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field *ngIf="selectedField === 'chargeMemoAcknowledgedDate'" class="col-6">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput formControlName="chargeMemoAcknowledgedDateRemarks"></textarea>
+            </mat-form-field>
+  
+            <div class="col-6" *ngIf="selectedField === 'chargeMemoAcknowledgedDate'" class="form-field file-upload-container">
+              <mat-icon class="upload-icon">file_upload</mat-icon>
+              <mat-label>Upload File</mat-label>
+              <input type="file" accept="application/pdf" formControlName="chargeMemoAcknowledgedDateuploadFile" (change)="onchargeMemoAcknowledgedDateuploadFileSelected($event)" />
+                <div [ngClass]="fileUploadError ? 'error-message' : 'file-restriction'">
+                  <small>{{ fileUploadError || 'Only PDF files are allowed.' }}</small>
+
+                </div>
+                <div *ngIf="updateSequenceFormGroup.get('chargeMemoAcknowledgedDateuploadFile')?.value">
+                  <p>Uploaded File: {{ updateSequenceFormGroup.get('chargeMemoAcknowledgedDateuploadFile')?.value }}</p>
+                </div>
+                <button *ngIf="download2" mat-button (click)="downloadFilechargeMemoAcknowledgedDateFile()">
+                  <mat-icon>download</mat-icon> Download
+                </button>
+              </div>
+              <mat-error class="countchargeerror"
+                *ngIf="updateSequenceFormGroup.get('chargeMemoAcknowledgedDateuploadFile')?.hasError('required')">
+                This field is required
+              </mat-error>
+              <div class="btn_align">
+              <button (click)="onSubmit()" mat-raised-button color="primary"  class="submit-button" [disabled]="!isChargeMemoAcknowledgedDateValid()">Submit</button>
+            </div>
+            </div>
+    
+        
+
+          <div *ngIf="selectedField === 'dateOfDefenceStatement'" class="form-field">
+            <mat-form-field>
+              <mat-label>Date of Defence Statement</mat-label>
+              <input
+                placeholder="DD/MM/YYYY"
+                formControlName="dateOfDefenceStatement"
+                matInput
+                [matDatepicker]="dateOfDefenceStatementPicker" [min]="mindateOfDefenceStatementSelectDate" [max]="maxdateOfDefenceStatementSelectDate" (dateChange)="dateOfAppointmentOfEnquiryOfficerChange($event)"
+              />
+              <mat-datepicker-toggle matIconSuffix [for]="dateOfDefenceStatementPicker"></mat-datepicker-toggle>
+              <mat-datepicker #dateOfDefenceStatementPicker></mat-datepicker>
+              <mat-error *ngIf="updateSequenceFormGroup.get('dateOfDefenceStatement')?.hasError('required')">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field *ngIf="selectedField === 'dateOfDefenceStatement'" class="col-6">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput formControlName="dateOfDefenceStatementRemarks"></textarea>
+              <mat-error *ngIf="updateSequenceFormGroup.get('dateOfDefenceStatementRemarks')?.hasError('required')">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+  
+            <div class="col-6" *ngIf="selectedField === 'dateOfDefenceStatement'" class="form-field file-upload-container">
+              <mat-icon class="upload-icon">file_upload</mat-icon>
+              <mat-label>Upload File</mat-label>
+              <input type="file" accept="application/pdf" formControlName="dateOfDefenceStatementuploadFile" (change)="ondateOfDefenceStatementuploadFileSelected($event)" />
+                <div [ngClass]="fileUploadError ? 'error-message' : 'file-restriction'">
+                  <small>{{ fileUploadError || 'Only PDF files are allowed.' }}</small>
+
+                </div>
+                <div *ngIf="updateSequenceFormGroup.get('dateOfDefenceStatementuploadFile')?.value">
+                  <p>Uploaded File: {{ updateSequenceFormGroup.get('dateOfDefenceStatementuploadFile')?.value }}</p>
+                </div>
+                <button *ngIf="download3" mat-button (click)="downloadFiledateOfDefenceStatementFile()">
+                  <mat-icon>download</mat-icon> Download
+                </button>
+              </div>
+              <mat-error class="countchargeerror"
+                *ngIf="updateSequenceFormGroup.get('dateOfDefenceStatementuploadFile')?.hasError('required')">
+                This field is required
+              </mat-error>
+              <div class="btn_align">
+              <button (click)="onSubmit()" mat-raised-button color="primary"  class="submit-button" [disabled]="!isDateOfDefenceStatementValid()">Submit</button>
+            </div>
+            </div>
+
+
+           
+          <div *ngIf="selectedField === 'dateOfAppointmentOfEnquiryOfficer'" class="form-field">
+            <mat-form-field>
+              <mat-label>Date of Appointment Of Enquiry Officer</mat-label>
+              <input
+                placeholder="DD/MM/YYYY"
+                formControlName="dateOfAppointmentOfEnquiryOfficer"
+                matInput
+                [matDatepicker]="dateOfAppointmentOfEnquiryOfficerPicker" [min]="mindateOfAppointmentOfEnquiryOfficerSelectDate" [max]="maxdateOfAppointmentOfEnquiryOfficerSelectDate" (dateChange)="dateOfEnquiryOfficerChange($event)"
+              />
+              <mat-datepicker-toggle matIconSuffix [for]="dateOfAppointmentOfEnquiryOfficerPicker"></mat-datepicker-toggle>
+              <mat-datepicker #dateOfAppointmentOfEnquiryOfficerPicker></mat-datepicker>
+              <mat-error *ngIf="updateSequenceFormGroup.get('dateOfAppointmentOfEnquiryOfficer')?.hasError('required')">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field *ngIf="selectedField === 'dateOfAppointmentOfEnquiryOfficer'" class="col-6">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput formControlName="dateOfAppointmentOfEnquiryOfficerRemarks"></textarea>
+              <mat-error *ngIf="updateSequenceFormGroup.get('dateOfAppointmentOfEnquiryOfficerRemarks')?.hasError('required')">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+  
+            <div class="col-6" *ngIf="selectedField === 'dateOfAppointmentOfEnquiryOfficer'" class="form-field file-upload-container">
+              <mat-icon class="upload-icon">file_upload</mat-icon>
+              <mat-label>Upload File</mat-label>
+              <input type="file" accept="application/pdf" formControlName="dateOfAppointmentOfEnquiryOfficeruploadFile" (change)="ondateOfAppointmentOfEnquiryOfficerUploadFileSelected($event)" />
+                <div [ngClass]="fileUploadError ? 'error-message' : 'file-restriction'">
+                  <small>{{ fileUploadError || 'Only PDF files are allowed.' }}</small>
+
+                </div>
+                <div *ngIf="updateSequenceFormGroup.get('dateOfAppointmentOfEnquiryOfficeruploadFile')?.value">
+                  <p>Uploaded File: {{ updateSequenceFormGroup.get('dateOfAppointmentOfEnquiryOfficeruploadFile')?.value }}</p>
+                </div>
+                <button *ngIf="download4" mat-button (click)="downloadFiledateOfAppointmentOfEnquiryOfficerFile()">
+                  <mat-icon>download</mat-icon> Download
+                </button>
+              </div>
+              <mat-error class="countchargeerror"
+                *ngIf="updateSequenceFormGroup.get('dateOfAppointmentOfEnquiryOfficeruploadFile')?.hasError('required')">
+                This field is required
+              </mat-error>
+              <div class="btn_align">
+              <button (click)="onSubmit()" mat-raised-button color="primary"  class="submit-button" [disabled]="!isDateOfAppointmentOfEnquiryOfficerValid()">Submit</button>
+            </div>
+            </div>
+
+
+          <div *ngIf="selectedField === 'dateOfEnquiryOfficer'" class="form-field">
+            <mat-form-field>
+              <mat-label>Date of Enquiry Officer</mat-label>
+              <input
+                placeholder="DD/MM/YYYY"
+                formControlName="dateOfEnquiryOfficer"
+                matInput
+                [matDatepicker]="dateOfEnquiryOfficerPicker" [min]="mindateOfEnquiryOfficerSelectDate" [max]="maxdateOfEnquiryOfficerSelectDate" (dateChange)="dateOfMinutesDrawnChange($event)"
+              />
+              <mat-datepicker-toggle matIconSuffix [for]="dateOfEnquiryOfficerPicker"></mat-datepicker-toggle>
+              <mat-datepicker #dateOfEnquiryOfficerPicker></mat-datepicker>
+              <mat-error *ngIf="updateSequenceFormGroup.get('dateOfEnquiryOfficer')?.hasError('required')">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field *ngIf="selectedField === 'dateOfEnquiryOfficer'" class="col-6">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput formControlName="dateOfEnquiryOfficerRemarks"></textarea>
+              <mat-error *ngIf="updateSequenceFormGroup.get('dateOfEnquiryOfficerRemarks')?.hasError('required')">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+  
+            <div class="col-6" *ngIf="selectedField === 'dateOfEnquiryOfficer'" class="form-field file-upload-container">
+              <mat-icon class="upload-icon">file_upload</mat-icon>
+              <mat-label>Upload File</mat-label>
+              <input type="file" accept="application/pdf" formControlName="dateOfEnquiryOfficeruploadFile" (change)="ondateOfEnquiryOfficerUploadFileSelected($event)" />
+                <div [ngClass]="fileUploadError ? 'error-message' : 'file-restriction'">
+                  <small>{{ fileUploadError || 'Only PDF files are allowed.' }}</small>
+
+                </div>
+                <div *ngIf="updateSequenceFormGroup.get('dateOfEnquiryOfficeruploadFile')?.value">
+                  <p>Uploaded File: {{ updateSequenceFormGroup.get('dateOfEnquiryOfficeruploadFile')?.value }}</p>
+                </div>
+                <button *ngIf="download5" mat-button (click)="downloadFiledateOfEnquiryOfficerFile()">
+                  <mat-icon>download</mat-icon> Download
+                </button>
+              </div>
+              <mat-error class="countchargeerror"
+                *ngIf="updateSequenceFormGroup.get('dateOfEnquiryOfficeruploadFile')?.hasError('required')">
+                This field is required
+              </mat-error>
+              <div class="btn_align">
+              <button (click)="onSubmit()" mat-raised-button color="primary"  class="submit-button" [disabled]="!isDateOfEnquiryOfficerValid()">Submit</button>
+            </div>
+            </div>
+
+
+
+          <div *ngIf="selectedField === 'dateOfMinutesDrawn'" class="form-field">
+            <mat-form-field>
+              <mat-label>Date of Minutes Drawn</mat-label>
+              <input
+                placeholder="DD/MM/YYYY"
+                formControlName="dateOfMinutesDrawn"
+                matInput
+                [matDatepicker]="dateOfMinutesDrawnPicker" [min]="mindateOfMinutesDrawnSelectDate" [max]="maxdateOfMinutesDrawnSelectDate" (dateChange)="dateOfFrCallingMemoAlongWithMinuteChange($event)"
+              />
+              <mat-datepicker-toggle matIconSuffix [for]="dateOfMinutesDrawnPicker"></mat-datepicker-toggle>
+              <mat-datepicker #dateOfMinutesDrawnPicker></mat-datepicker>
+              <mat-error *ngIf="updateSequenceFormGroup.get('dateOfMinutesDrawn')?.hasError('required')">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field *ngIf="selectedField === 'dateOfMinutesDrawn'" class="col-6">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput formControlName="dateOfMinutesDrawnRemarks"></textarea>
+              <mat-error *ngIf="updateSequenceFormGroup.get('dateOfMinutesDrawnRemarks')?.hasError('required')">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+  
+            <div class="col-6" *ngIf="selectedField === 'dateOfMinutesDrawn'" class="form-field file-upload-container">
+              <mat-icon class="upload-icon">file_upload</mat-icon>
+              <mat-label>Upload File</mat-label>
+               <input type="file" accept="application/pdf" formControlName="dateOfMinutesDrawnuploadFile" (change)="ondateOfMinutesDrawnUploadFileSelected($event)" />
+                <div [ngClass]="fileUploadError ? 'error-message' : 'file-restriction'">
+                  <small>{{ fileUploadError || 'Only PDF files are allowed.' }}</small>
+
+                </div>
+                <div *ngIf="updateSequenceFormGroup.get('dateOfMinutesDrawnuploadFile')?.value">
+                  <p>Uploaded File: {{ updateSequenceFormGroup.get('dateOfMinutesDrawnuploadFile')?.value }}</p>
+                </div>
+                <button *ngIf="download6" mat-button (click)="downloadFiledateOfMinutesDrawnFile()">
+                  <mat-icon>download</mat-icon> Download
+                </button>
+              </div>
+              <mat-error class="countchargeerror"
+                *ngIf="updateSequenceFormGroup.get('dateOfMinutesDrawnuploadFile')?.hasError('required')">
+                This field is required
+              </mat-error>
+              <div class="btn_align">
+              <button (click)="onSubmit()" mat-raised-button color="primary"  class="submit-button" [disabled]="!isDateOfMinutesDrawnValid()">Submit</button>
+            </div>
+            </div>
+
+
+          <div *ngIf="selectedField === 'dateOfFrCallingMemoAlongWithMinute'" class="form-field">
+            <mat-form-field>
+              <mat-label>Date of FR Calling Memo Along With Minute</mat-label>
+              <input
+                placeholder="DD/MM/YYYY"
+                formControlName="dateOfFrCallingMemoAlongWithMinute"
+                matInput
+                [matDatepicker]="dateOfFrCallingMemoAlongWithMinutePicker" [min]="mindateOfFrCallingMemoAlongWithMinuteSelectDate" [max]="maxdateOfFrCallingMemoAlongWithMinuteSelectDate" (dateChange)="dateOfServingOfMinuteChange($event)"
+              />
+              <mat-datepicker-toggle matIconSuffix [for]="dateOfFrCallingMemoAlongWithMinutePicker"></mat-datepicker-toggle>
+              <mat-datepicker #dateOfFrCallingMemoAlongWithMinutePicker></mat-datepicker>
+              <mat-error *ngIf="updateSequenceFormGroup.get('dateOfFrCallingMemoAlongWithMinute')?.hasError('required')">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field *ngIf="selectedField === 'dateOfFrCallingMemoAlongWithMinute'" class="col-6">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput formControlName="dateOfFrCallingMemoAlongWithMinuteRemarks"></textarea>
+              <mat-error *ngIf="updateSequenceFormGroup.get('dateOfFrCallingMemoAlongWithMinuteRemarks')?.hasError('required')">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+  
+            <div class="col-6" *ngIf="selectedField === 'dateOfFrCallingMemoAlongWithMinute'" class="form-field file-upload-container">
+              <mat-icon class="upload-icon">file_upload</mat-icon>
+              <mat-label>Upload File</mat-label>
+              <input type="file" accept="application/pdf" formControlName="dateOfFrCallingMemoAlongWithMinuteuploadFile" (change)="ondateOfFrCallingMemoAlongWithMinuteuploadFileSelected($event)" />
+                <div [ngClass]="fileUploadError ? 'error-message' : 'file-restriction'">
+                  <small>{{ fileUploadError || 'Only PDF files are allowed.' }}</small>
+
+                </div>
+                <div *ngIf="updateSequenceFormGroup.get('dateOfFrCallingMemoAlongWithMinuteuploadFile')?.value">
+                  <p>Uploaded File: {{ updateSequenceFormGroup.get('dateOfFrCallingMemoAlongWithMinuteuploadFile')?.value }}</p>
+                </div>
+                <button *ngIf="download7" mat-button (click)="downloadFiledateOfFrCallingMemoAlongWithMinuteFile()">
+                  <mat-icon>download</mat-icon> Download
+                </button>
+              </div>
+              <mat-error class="countchargeerror"
+                *ngIf="updateSequenceFormGroup.get('dateOfFrCallingMemoAlongWithMinuteuploadFile')?.hasError('required')">
+                This field is required
+              </mat-error>
+              <div class="btn_align">
+              <button (click)="onSubmit()" mat-raised-button color="primary"  class="submit-button" [disabled]="!isDateOfFrCallingMemoAlongWithMinuteValid()">Submit</button>
+            </div>
+            </div>
+
+
+
+          <div *ngIf="selectedField === 'dateOfServingOfMinute'" class="form-field">
+            <mat-form-field>
+              <mat-label>Date of Serving of Minute</mat-label>
+              <input
+                placeholder="DD/MM/YYYY"
+                formControlName="dateOfServingOfMinute"
+                matInput
+                [matDatepicker]="dateOfServingOfMinutePicker" [min]="mindateOfServingOfMinuteSelectDate" [max]="maxdateOfServingOfMinuteSelectDate" (dateChange)="dateOfFrFurnishedChange($event)"
+                />
+              <mat-datepicker-toggle matIconSuffix [for]="dateOfServingOfMinutePicker"></mat-datepicker-toggle>
+              <mat-datepicker #dateOfServingOfMinutePicker></mat-datepicker>
+              <mat-error *ngIf="updateSequenceFormGroup.get('dateOfServingOfMinute')?.hasError('required')">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field *ngIf="selectedField === 'dateOfServingOfMinute'" class="col-6">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput formControlName="dateOfServingOfMinuteRemarks"></textarea>
+              <mat-error *ngIf="updateSequenceFormGroup.get('dateOfServingOfMinuteRemarks')?.hasError('required')">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+  
+            <div class="col-6" *ngIf="selectedField === 'dateOfServingOfMinute'" class="form-field file-upload-container">
+              <mat-icon class="upload-icon">file_upload</mat-icon>
+              <mat-label>Upload File</mat-label>
+              <input type="file" accept="application/pdf" formControlName="dateOfServingOfMinuteuploadFile" (change)="ondateOfServingOfMinuteuploadFileSelected($event)" />
+                <div [ngClass]="fileUploadError ? 'error-message' : 'file-restriction'">
+                  <small>{{ fileUploadError || 'Only PDF files are allowed.' }}</small>
+
+                </div>
+                <div *ngIf="updateSequenceFormGroup.get('dateOfServingOfMinuteuploadFile')?.value">
+                  <p>Uploaded File: {{ updateSequenceFormGroup.get('dateOfServingOfMinuteuploadFile')?.value }}</p>
+                </div>
+                <button *ngIf="download8" mat-button (click)="downloadFiledateOfServingOfMinuteFile()">
+                  <mat-icon>download</mat-icon> Download
+                </button>
+              </div>
+              <mat-error class="countchargeerror"
+                *ngIf="updateSequenceFormGroup.get('dateOfServingOfMinuteuploadFile')?.hasError('required')">
+                This field is required
+              </mat-error>
+              <div class="btn_align">
+              <button (click)="onSubmit()" mat-raised-button color="primary"  class="submit-button" [disabled]="!isDateOfServingOfMinuteValid()">Submit</button>
+            </div>
+            </div>
+
+
+          <div *ngIf="selectedField === 'dateOfFrFurnished'" class="form-field">
+            <mat-form-field>
+              <mat-label>Date of FR Furnished</mat-label>
+              <input
+                placeholder="DD/MM/YYYY"
+                formControlName="dateOfFrFurnished"
+                matInput
+                [matDatepicker]="dateOfFrFurnishedPicker" [min]="mindateOfFrFurnishedSelectDate" [max]="maxdateOfFrFurnishedSelectDate" (dateChange)="dateOfFinalOrderChange($event)"
+              />
+              <mat-datepicker-toggle matIconSuffix [for]="dateOfFrFurnishedPicker"></mat-datepicker-toggle>
+              <mat-datepicker #dateOfFrFurnishedPicker></mat-datepicker>
+              <mat-error *ngIf="updateSequenceFormGroup.get('dateOfFrFurnished')?.hasError('required')">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field *ngIf="selectedField === 'dateOfFrFurnished'" class="col-6">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput formControlName="dateOfFrFurnishedRemarks"></textarea>
+              <mat-error *ngIf="updateSequenceFormGroup.get('dateOfFrFurnishedRemarks')?.hasError('required')">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+  
+            <div class="col-6" *ngIf="selectedField === 'dateOfFrFurnished'" class="form-field file-upload-container">
+              <mat-icon class="upload-icon">file_upload</mat-icon>
+              <mat-label>Upload File</mat-label>
+              <input type="file" accept="application/pdf" formControlName="dateOfFrFurnisheduploadFile" (change)="ondateOfFrFurnishedUploadFileSelected($event)" />
+                <div [ngClass]="fileUploadError ? 'error-message' : 'file-restriction'">
+                  <small>{{ fileUploadError || 'Only PDF files are allowed.' }}</small>
+
+                </div>
+                <div *ngIf="updateSequenceFormGroup.get('dateOfFrFurnisheduploadFile')?.value">
+                  <p>Uploaded File: {{ updateSequenceFormGroup.get('dateOfFrFurnisheduploadFile')?.value }}</p>
+                </div>
+                <button *ngIf="download9" mat-button (click)="downloadFiledateOfFrFurnishedFile()">
+                  <mat-icon>download</mat-icon> Download
+                </button>
+              </div>
+              <mat-error class="countchargeerror"
+                *ngIf="updateSequenceFormGroup.get('dateOfFrFurnisheduploadFile')?.hasError('required')">
+                This field is required
+              </mat-error>
+              <div class="btn_align">
+              <button (click)="onSubmit()" mat-raised-button color="primary"  class="submit-button" [disabled]="!isDateOfFrFurnishedValid()">Submit</button>
+            </div>
+            </div>
+
+
+          <div *ngIf="selectedField === 'dateOfFinalOrder'" class="form-field">
+            <mat-form-field>
+              <mat-label>Date of Final Order</mat-label>
+              <input
+                placeholder="DD/MM/YYYY"
+                formControlName="dateOfFinalOrder"
+                matInput
+                [matDatepicker]="dateOfFinalOrderPicker"  [min]="mindateOfFinalOrderSelectDate" [max]="maxdateOfFinalOrderSelectDate" />
+              <mat-datepicker-toggle matIconSuffix [for]="dateOfFinalOrderPicker"></mat-datepicker-toggle>
+              <mat-datepicker #dateOfFinalOrderPicker></mat-datepicker>
+              <mat-error *ngIf="updateSequenceFormGroup.get('dateOfFinalOrder')?.hasError('required')">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field *ngIf="selectedField === 'dateOfFinalOrder'" class="col-6">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput formControlName="dateOfFinalOrderRemarks"></textarea>
+              <mat-error *ngIf="updateSequenceFormGroup.get('dateOfFinalOrderRemarks')?.hasError('required')">
+                This field is required
+              </mat-error>
+              <mat-error *ngIf="updateSequenceFormGroup.get('dateOfFinalOrderRemarks')?.hasError('maxlength')">
+                Maximum length is 500 characters
+              </mat-error> 
+            </mat-form-field>
+  
+            <div class="col-6" *ngIf="selectedField === 'dateOfFinalOrder'" class="form-field file-upload-container">
+              <mat-icon class="upload-icon">file_upload</mat-icon>
+              <mat-label>Upload File</mat-label>
+              <input type="file" accept="application/pdf" formControlName="dateOfFinalOrderuploadFile" (change)="ondateOfFinalOrderuploadFileSelected($event)" />
+                <div [ngClass]="fileUploadError ? 'error-message' : 'file-restriction'">
+                  <small>{{ fileUploadError || 'Only PDF files are allowed.' }}</small>
+
+                </div>
+                <div *ngIf="updateSequenceFormGroup.get('dateOfFinalOrderuploadFile')?.value">
+                  <p>Uploaded File: {{ updateSequenceFormGroup.get('dateOfFinalOrderuploadFile')?.value }}</p>
+                </div>
+                <button *ngIf="download10" mat-button (click)="downloadFiledateOfFinalOrderFiles()">
+                  <mat-icon>download</mat-icon> Download
+                </button>
+              </div>
+              <mat-error class="countchargeerror"
+                *ngIf="updateSequenceFormGroup.get('dateOfFinalOrderuploadFile')?.hasError('required')">
+                This field is required
+              </mat-error>
+              <div class="btn_align">
+              <button (click)="onSubmit()" mat-raised-button color="primary"  class="submit-button" [disabled]="!isDateOfFinalOrderValid()">Submit</button>
+            </div>
+            </div>
+
+
+
+            <div *ngIf="selectedField === 'appealOrder'" class="form-field">
+              <mat-form-field *ngIf="selectedField === 'appealOrder'">
+                <mat-label>Date of Appeal Order</mat-label>
+                <input placeholder="DD/MM/YYYY" formControlName="dateOfAppealOrder" matInput
+                  [matDatepicker]="finalOrderPicker" [min]="mindateOfFinalOrderSelectDate" [max]="maxdateOfFinalOrderSelectDate" />
+                <mat-datepicker-toggle matIconSuffix [for]="finalOrderPicker"></mat-datepicker-toggle>
+                <mat-datepicker #finalOrderPicker></mat-datepicker>
+                <mat-error *ngIf="updateSequenceFormGroup.get('dateOfAppealOrder')?.hasError('required')">
+                  This field is required
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field *ngIf="selectedField === 'appealOrder'">
+                <mat-label>Appeal Status</mat-label>
+                <textarea matInput formControlName="appealStatus"></textarea>
+                <mat-error *ngIf="updateSequenceFormGroup.get('appealStatus')?.hasError('required')">
+                  This field is required
+                </mat-error>
+                <mat-error *ngIf="updateSequenceFormGroup.get('appealStatus')?.hasError('maxlength')">
+                  Maximum length is 500 characters
+                </mat-error>  
+              </mat-form-field>
+
+              <mat-form-field *ngIf="selectedField === 'appealOrder'" class="col-6">
+                <mat-label>Details of Punishment After Appeal</mat-label>
+                <textarea matInput formControlName="detailofPunishmentAppeal"></textarea>
+                <mat-error *ngIf="updateSequenceFormGroup.get('detailofPunishmentAppeal')?.hasError('required')">
+                  This field is required
+                </mat-error>
+                <mat-error *ngIf="updateSequenceFormGroup.get('detailofPunishmentAppeal')?.hasError('maxlength')">
+                  Maximum length is 500 characters
+                </mat-error>  
+              </mat-form-field>
+
+              <mat-form-field *ngIf="selectedField === 'appealOrder'" class="col-6">
+                <mat-label>Remarks</mat-label>
+                <textarea matInput formControlName="appealRemark"></textarea>
+                <mat-error *ngIf="updateSequenceFormGroup.get('appealRemark')?.hasError('required')">
+                  This field is required
+                </mat-error>
+                <mat-error *ngIf="updateSequenceFormGroup.get('appealRemark')?.hasError('maxlength')">
+                  Maximum length is 500 characters
+                </mat-error>  
+              </mat-form-field>
+
+              <div class="col-6" *ngIf="selectedField === 'appealOrder'"
+              class="form-field file-upload-container">
+              <mat-icon class="upload-icon">file_upload</mat-icon>
+              <mat-label>Upload File</mat-label>
+
+              <input type="file" accept="application/pdf" formControlName="apppealOrderFile"
+                class="form-control" (change)="ondetailsOfPunishmentUploadFileSelect($event)" />
+              <div [ngClass]="fileUploadError ? 'error-message' : 'file-restriction'">
+                <small>{{ fileUploadError || 'Only PDF files are allowed.' }}</small>
+              </div>
+              <div *ngIf="updateSequenceFormGroup.get('apppealOrderFile')?.value">
+                <p>Uploaded File: {{ updateSequenceFormGroup.get('apppealOrderFile')?.value }}</p>
+              </div>
+            </div>
+            <mat-error class="countchargeerror"
+              *ngIf="updateSequenceFormGroup.get('apppealOrderFile')?.hasError('required')">
+              This field is required
+            </mat-error>
+            <div class="btn_align">
+              <button (click)="onSubmit()" mat-raised-button color="primary"  class="submit-button" [disabled]="!isAppealOrderValid()">Submit</button>
+            </div>
+          </div>
+
+  
+          <div *ngIf="selectedField === 'revisionOrder'" class="form-field">
+
+            <mat-form-field *ngIf="selectedField === 'revisionOrder'">
+              <mat-label>Date of Revision Order</mat-label>
+              <input placeholder="DD/MM/YYYY" formControlName="dateOfRevisionOrder" matInput
+                [matDatepicker]="finalOrderPicker" [min]="mindateOfFinalOrderSelectDate" [max]="maxdateOfFinalOrderSelectDate" />
+              <mat-datepicker-toggle matIconSuffix [for]="finalOrderPicker"></mat-datepicker-toggle>
+              <mat-datepicker #finalOrderPicker></mat-datepicker>
+              <mat-error *ngIf="updateSequenceFormGroup.get('dateOfRevisionOrder')?.hasError('required')">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="selectedField === 'revisionOrder'">
+              <mat-label>Revision Status</mat-label>
+              <textarea matInput formControlName="revisionStatus"></textarea>
+              <mat-error *ngIf="updateSequenceFormGroup.get('revisionStatus')?.hasError('required')">
+                This field is required
+              </mat-error>
+              <mat-error *ngIf="updateSequenceFormGroup.get('revisionStatus')?.hasError('maxlength')">
+                Maximum length is 500 characters
+              </mat-error>  
+            </mat-form-field>
+
+            <mat-form-field *ngIf="selectedField === 'revisionOrder'" class="col-6">
+              <mat-label>Details of Punishment After Revision</mat-label>
+              <textarea matInput formControlName="detailofPunishmentRevision"></textarea>
+              <mat-error *ngIf="updateSequenceFormGroup.get('detailofPunishmentRevision')?.hasError('required')">
+                This field is required
+              </mat-error>
+              <mat-error *ngIf="updateSequenceFormGroup.get('detailofPunishmentRevision')?.hasError('maxlength')">
+                Maximum length is 500 characters
+              </mat-error>  
+            </mat-form-field>
+
+            <mat-form-field *ngIf="selectedField === 'revisionOrder'" class="col-6">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput formControlName="revisionRemark"></textarea>
+              <mat-error *ngIf="updateSequenceFormGroup.get('revisionRemark')?.hasError('required')">
+                This field is required
+              </mat-error>
+              <mat-error *ngIf="updateSequenceFormGroup.get('revisionRemark')?.hasError('maxlength')">
+                Maximum length is 500 characters
+              </mat-error>  
+            </mat-form-field>
+
+            <div class="col-6" *ngIf="selectedField === 'revisionOrder'"
+              class="form-field file-upload-container">
+              <mat-icon class="upload-icon">file_upload</mat-icon>
+              <mat-label>Upload File</mat-label>
+
+              <input type="file" accept="application/pdf" formControlName="revisionOrderFile"
+                class="form-control" (change)="ondetailsOfPunishmentUploadFileSelect($event)" />
+              <div [ngClass]="fileUploadError ? 'error-message' : 'file-restriction'">
+                <small>{{ fileUploadError || 'Only PDF files are allowed.' }}</small>
+              </div>
+              <div *ngIf="updateSequenceFormGroup.get('revisionOrderFile')?.value">
+                <p>Uploaded File: {{ updateSequenceFormGroup.get('revisionOrderFile')?.value }}</p>
+              </div>
+            </div>
+            <mat-error class="countchargeerror"
+              *ngIf="updateSequenceFormGroup.get('revisionOrderFile')?.hasError('required')">
+              This field is required
+            </mat-error>
+            <div class="btn_align">
+              <button (click)="onSubmit()" mat-raised-button color="primary"  class="submit-button" [disabled]="!isRevisionOrderValid()">Submit</button>
+            </div>
+          </div>
+
+          <div *ngIf="selectedField === 'reviewOrder'" class="form-field">
+            <mat-form-field *ngIf="selectedField === 'reviewOrder'">
+              <mat-label>Date of Review Order</mat-label>
+              <input placeholder="DD/MM/YYYY" formControlName="dateOfReviewOrder" matInput
+                [matDatepicker]="finalOrderPicker" [min]="mindateOfFinalOrderSelectDate" [max]="maxdateOfFinalOrderSelectDate" />
+              <mat-datepicker-toggle matIconSuffix [for]="finalOrderPicker"></mat-datepicker-toggle>
+              <mat-datepicker #finalOrderPicker></mat-datepicker>
+              <mat-error *ngIf="updateSequenceFormGroup.get('dateOfReviewOrder')?.hasError('required')">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="selectedField === 'reviewOrder'">
+              <mat-label>Review Status</mat-label>
+              <textarea matInput formControlName="reviewStatus"></textarea>
+              <mat-error *ngIf="updateSequenceFormGroup.get('reviewStatus')?.hasError('required')">
+                This field is required
+              </mat-error>
+              <mat-error *ngIf="updateSequenceFormGroup.get('reviewStatus')?.hasError('maxlength')">
+                Maximum length is 500 characters
+              </mat-error>  
+            </mat-form-field>
+
+            <mat-form-field *ngIf="selectedField === 'reviewOrder'" class="col-6">
+              <mat-label>Details of Punishment After Review</mat-label>
+              <textarea matInput formControlName="detailofPunishmentReview"></textarea>
+              <mat-error *ngIf="updateSequenceFormGroup.get('detailofPunishmentReview')?.hasError('required')">
+                This field is required
+              </mat-error>
+              <mat-error *ngIf="updateSequenceFormGroup.get('detailofPunishmentReview')?.hasError('maxlength')">
+                Maximum length is 500 characters
+              </mat-error>  
+            </mat-form-field>
+
+            <div class="col-6" *ngIf="selectedField === 'reviewOrder'"
+              class="form-field file-upload-container">
+              <mat-icon class="upload-icon">file_upload</mat-icon>
+              <mat-label>Upload File</mat-label>
+
+              <input type="file" accept="application/pdf" formControlName="reviewOrderFile"
+                class="form-control" (change)="ondetailsOfPunishmentUploadFileSelect($event)" />
+              <div [ngClass]="fileUploadError ? 'error-message' : 'file-restriction'">
+                <small>{{ fileUploadError || 'Only PDF files are allowed.' }}</small>
+              </div>
+              <div *ngIf="updateSequenceFormGroup.get('reviewOrderFile')?.value">
+                <p>Uploaded File: {{ updateSequenceFormGroup.get('reviewOrderFile')?.value }}</p>
+              </div>
+            </div>
+            <mat-error class="countchargeerror"
+              *ngIf="updateSequenceFormGroup.get('reviewOrderFile')?.hasError('required')">
+              This field is required
+            </mat-error>
+            <div class="btn_align">
+              <button (click)="onSubmit()" mat-raised-button color="primary"  class="submit-button" [disabled]="!isReviewOrderValid()">Submit</button>
+            </div>
+          </div>
+
+
+          <div *ngIf="selectedField === 'courtOrder'" class="form-field">
+
+            <mat-form-field *ngIf="selectedField === 'courtOrder'">
+              <mat-label>Date of Court Order</mat-label>
+              <input placeholder="DD/MM/YYYY" formControlName="dateOfCourtOrder" matInput
+                [matDatepicker]="finalOrderPicker" [min]="mindateOfFinalOrderSelectDate" [max]="maxdateOfFinalOrderSelectDate" />
+              <mat-datepicker-toggle matIconSuffix [for]="finalOrderPicker"></mat-datepicker-toggle>
+              <mat-datepicker #finalOrderPicker></mat-datepicker>
+              <mat-error *ngIf="updateSequenceFormGroup.get('dateOfCourtOrder')?.hasError('required')">
+                This field is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="selectedField === 'courtOrder'">
+              <mat-label>Court Status</mat-label>
+              <textarea matInput formControlName="courtStatus"></textarea>
+              <mat-error *ngIf="updateSequenceFormGroup.get('courtStatus')?.hasError('required')">
+                This field is required
+              </mat-error>
+              <mat-error *ngIf="updateSequenceFormGroup.get('courtStatus')?.hasError('maxlength')">
+                Maximum length is 500 characters
+              </mat-error>  
+            </mat-form-field>
+
+            <mat-form-field *ngIf="selectedField === 'courtOrder'" class="col-6">
+              <mat-label>Details of Punishment After Court Order</mat-label>
+              <textarea matInput formControlName="detailofPunishmentCourt"></textarea>
+              <mat-error *ngIf="updateSequenceFormGroup.get('detailofPunishmentCourt')?.hasError('required')">
+                This field is required
+              </mat-error>
+              <mat-error *ngIf="updateSequenceFormGroup.get('detailofPunishmentCourt')?.hasError('maxlength')">
+                Maximum length is 500 characters
+              </mat-error>  
+            </mat-form-field>
+
+            <mat-form-field *ngIf="selectedField === 'courtOrder'" class="col-6">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput formControlName="courtRemark"></textarea>
+              <mat-error *ngIf="updateSequenceFormGroup.get('courtRemark')?.hasError('required')">
+                This field is required
+              </mat-error>
+              <mat-error *ngIf="updateSequenceFormGroup.get('courtRemark')?.hasError('maxlength')">
+                Maximum length is 500 characters
+              </mat-error>  
+            </mat-form-field>
+
+            <div class="col-6" *ngIf="selectedField === 'courtOrder'"
+              class="form-field file-upload-container">
+              <mat-icon class="upload-icon">file_upload</mat-icon>
+              <mat-label>Upload File</mat-label>
+
+              <input type="file" accept="application/pdf" formControlName="courtOrderFile"
+                class="form-control" (change)="ondetailsOfPunishmentUploadFileSelect($event)" />
+              <div [ngClass]="fileUploadError ? 'error-message' : 'file-restriction'">
+                <small>{{ fileUploadError || 'Only PDF files are allowed.' }}</small>
+              </div>
+              <div *ngIf="updateSequenceFormGroup.get('courtOrderFile')?.value">
+                <p>Uploaded File: {{ updateSequenceFormGroup.get('courtOrderFile')?.value }}</p>
+              </div>
+            </div>
+            <mat-error class="countchargeerror"
+              *ngIf="updateSequenceFormGroup.get('courtOrderFile')?.hasError('required')">
+              This field is required
+            </mat-error>
+            <div class="btn_align">
+              <button (click)="onSubmit()" mat-raised-button color="primary"  class="submit-button" [disabled]="!isCourtOrderValid()">Submit</button>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Navigation buttons -->
+        <div class="button-container">
+          <div class="left-buttons">
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+          <!-- <button mat-raised-button color="primary" class="submit-button" [disabled]="!secondFormGroup.valid" (click)="onSubmit()">Submit</button> -->
+        </div>
+      </form>
+    </mat-step>
+
+  
+      <!-- Third Step: Remarks -->
+      <mat-step [stepControl]="prForm">
+        <form [formGroup]="prForm">
+          <ng-template matStepLabel>Final Remarks</ng-template>
+          <mat-form-field class="col-12">
+            <mat-label>Final Remarks</mat-label>
+            <textarea matInput formControlName="remarks"></textarea>
+            <mat-error *ngIf="prForm.get('remarks')?.hasError('required')">
+              This field is required
+            </mat-error>
+            <mat-error *ngIf="prForm.get('remarks')?.hasError('maxlength')">
+              Maximum length is 500 characters
+            </mat-error>  
+          </mat-form-field>
+
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button (click)="onSubmit()" mat-button [disabled]="!prForm.valid">Submit</button>
+          </div>
+        </form>
+      </mat-step>
+    </mat-stepper>
+  </div>
+</div>
+</div>
+</div>
+</div>
+<div class="container mt-3 text-start custom_sty">
+<button class="btn btn-secondary btn-sm btn_width" (click)="openConfirmationDialog()">Back</button>
+</div>

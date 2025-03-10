@@ -1,0 +1,101 @@
+<!-- pr-dashboard.component.html -->
+<div class="dashboard">
+  <app-static-header></app-static-header>
+  <!-- Header -->
+  <!-- <header class="header">
+    <div class="left-section">
+    <div class="logo-container">
+      <img src="pr_logo.ico" alt="PR Logo" class="logo">
+    </div>
+    <div class="logo">PR No Generator</div>
+  </div>
+  <div class="right-section"> -->
+    <!-- <nav class="nav-links"> -->
+      <!-- <mat-icon>person</mat-icon>
+      <div>{{userName}}
+      </div>
+      <a routerLink="/log-in"  class="nav-link" (click)="onLogout()">Logout</a> -->
+      <!-- <a routerLink="/home" class="nav-link">Home</a> -->
+    
+    <!-- </nav> -->
+  <!-- </div>
+  </header> -->
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h1>PR Dashboard</h1>
+
+    <!-- Cards Section -->
+    <div class="cards-section">
+      <!-- Row 1: 3A and 17A -->
+      <div class="row-layout">
+        <mat-card class="card card-green" (click)="navigateToTableData('3a')"  
+        [@cardAnimation]="cardStates['3A']" 
+        (mouseenter)="setHoverState('3A', 'hover')" 
+        (mouseleave)="setHoverState('3A', '*')">
+          <label class="fontsty">Minor PR</label>
+          <mat-card-title >3A</mat-card-title>
+          <mat-card-content>{{ totalPR3A }}</mat-card-content>
+        </mat-card>
+
+        <mat-card class="card card-blue" (click)="navigateToTableData('17a')" 
+        [@cardAnimation]="cardStates['17A']" 
+        (mouseenter)="setHoverState('17A', 'hover')" 
+        (mouseleave)="setHoverState('17A', '*')">
+          <label class="fontsty">Minor PR</label>
+          <mat-card-title>17A</mat-card-title>
+          <mat-card-content>{{ totalPR17A }}</mat-card-content>
+        </mat-card>
+
+        <mat-card class="card card-skyblue" (click)="totalPrlist()" 
+        [@cardAnimation]="cardStates['TotalMinor']" 
+        (mouseenter)="setHoverState('TotalMinor', 'hover')" 
+        (mouseleave)="setHoverState('TotalMinor', '*')">
+          <mat-card-title class="fontsty">Total Minor PR</mat-card-title>
+          <mat-card-content>{{totalMinorPrCount}}</mat-card-content>
+        </mat-card>
+      </div>
+
+      <!-- Row 2: 3B and 17B -->
+      <div class="row-layout">
+        <mat-card class="card card-yellow" 
+        [@cardAnimation]="cardStates['3B']" 
+        (mouseenter)="setHoverState('3B', 'hover')" 
+        (mouseleave)="setHoverState('3B', '*')">
+          <label class="fontsty">Major PR</label>
+          <mat-card-title>3B</mat-card-title>
+          <mat-card-content>{{ totalPR3B }}</mat-card-content>
+        </mat-card>
+
+        <mat-card class="card card-red"  
+        [@cardAnimation]="cardStates['17B']" 
+        (mouseenter)="setHoverState('17B', 'hover')" 
+        (mouseleave)="setHoverState('17B', '*')">
+          <label class="fontsty">Major PR</label>
+          <mat-card-title>17B</mat-card-title>
+          <mat-card-content>{{ totalPR17B }}</mat-card-content>
+        </mat-card>
+
+        <mat-card class="card card-gray" 
+        [@cardAnimation]="cardStates['TotalMajor']" 
+        (mouseenter)="setHoverState('TotalMajor', 'hover')" 
+        (mouseleave)="setHoverState('TotalMajor', '*')">
+          <mat-card-title class="fontsty">Total Major PR</mat-card-title>
+          <mat-card-content>{{totalMajorPrCount}}</mat-card-content>
+        </mat-card>
+      </div>
+      
+    </div>
+
+    <!-- Links Section -->
+    <div class="links">
+      <h1 class="links-title">PR No Generators</h1>
+      <div class="links-list row-layout">
+        <a routerLink="/pr-details" [queryParams]="{ action: 'new' }"  class="link" >New PR no.Generator for Current Year</a>
+        <a *ngIf="onetime" routerLink="/pr-details"  [queryParams]="{ action: 'current' }"   class="link" >One Time Entry of Last PR for Current Year</a>
+        <a routerLink="/pr-details" [queryParams]="{ action: 'existing' }" class="link" >Enter Previous Years PR Detail</a>
+        <a routerLink="/pr-details" [queryParams]="{ action: 'total-count' }" class="link">Enter Total PR count for the Previous Years</a>
+      </div>
+    </div>
+  </div>
+</div>

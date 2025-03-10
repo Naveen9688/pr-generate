@@ -1,0 +1,79 @@
+/* confirmation-dialog.component.css */
+.confirmation-dialog {
+    max-width: 450px;
+    padding: 24px;
+    border-radius: 8px;
+  }
+  
+  .dialog-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .warning-icon {
+    color: #ffc107;
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+    margin-right: 12px;
+  }
+  
+  .dialog-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2d2d2d;
+    margin: 0;
+  }
+  
+  .dialog-content {
+    margin: 0 0 24px 0;
+    padding: 0 8px;
+  }
+  
+  .content-text {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #5a5a5a;
+    margin: 0;
+  }
+  
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 0;
+  }
+  
+  .cancel-button {
+    padding: 8px 24px;
+    border-color: #cccccc;
+  }
+  
+  .confirm-button {
+    padding: 8px 24px;
+    background-color: #dc3545;
+    color: white;
+    transition: background-color 0.2s ease;
+  }
+  
+  .confirm-button:hover {
+    background-color: #bb2d3b;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .confirmation-dialog {
+      width: 90vw;
+      padding: 20px;
+    }
+    
+    .dialog-header {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    .warning-icon {
+      margin: 0 0 12px 0;
+    }
+  }

@@ -1,0 +1,223 @@
+<app-static-header></app-static-header>
+<div class="table-wrapper">
+    <!-- Title Section -->
+    <div class="table-title">
+        <span>Major Punishment Roll's Data</span>
+    </div>
+    <br><br>
+  
+    <!-- Search Section -->
+    <div class="search-section">
+      <div class="search-fields">
+        <!-- PR No Search Field -->
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>PR No</mat-label>
+          <input matInput placeholder="Enter PR No"  [(ngModel)]="prNo"/>
+        </mat-form-field>
+  
+        <!-- Year Search Field -->
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Year</mat-label>
+          <input matInput placeholder="Enter Year" [(ngModel)]="year" />
+        </mat-form-field>
+
+        <mat-form-field class="search-field" appearance="outline">
+            <mat-label>Sequence Pending with</mat-label>
+            <mat-select [(value)]="pendingSequenceId" (selectionChange)="onFieldSelect($event.value)">
+              <mat-option value="1" selected>Charge Memo Approved Date</mat-option>
+              <mat-option value="2">Charge Memo Acknowledged Date</mat-option>
+              <mat-option value="3">Date of Defence Statement</mat-option>
+              <mat-option value="4">Date of Appointment Of Enquiry Officer</mat-option>
+              <mat-option value="5">Date of Enquiry Officer</mat-option>
+              <mat-option value="6">Date of Minutes Drawn</mat-option>
+              <mat-option value="7">Date of FR Calling Memo Along With Minute</mat-option>
+              <mat-option value="8">Date of Serving of Minute</mat-option>
+              <mat-option value="9">Date of FR Furnished</mat-option>
+              <mat-option value="10">Date of Final Order</mat-option>
+              <mat-option value="11">Details of Punishment</mat-option>
+              <mat-option value="12">Completed Sequence</mat-option>
+              <mat-option (click)="allList()">All Sequences</mat-option>
+              <!-- <mat-option value="uploadFile">Upload File</mat-option> -->
+            </mat-select>
+          </mat-form-field>
+  
+        <!-- Search Button -->
+        <button mat-raised-button color="primary" class="onsearch_btn" (click)="onSearch()">Search</button>
+      </div>
+    </div>
+  
+  
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="dataSource.data.length > 0; else noData">
+  
+        <!-- PR no Column -->
+  
+        <ng-container matColumnDef="SNo">
+          <th mat-header-cell *matHeaderCellDef> SNO </th>
+          <td mat-cell *matCellDef="let row; let i = index"> {{ i + 1 }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="prSectionNo">
+            <th mat-header-cell *matHeaderCellDef> Section</th>
+            <td mat-cell *matCellDef="let element"> {{element.prSectionNo}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="prNo">
+          <th mat-header-cell *matHeaderCellDef> PR No </th>
+          <td mat-cell *matCellDef="let element"> {{element.prNo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="year">
+            <th mat-header-cell *matHeaderCellDef> Year </th>
+            <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+          </ng-container>
+    
+    
+          <ng-container matColumnDef="shortcode">
+            <th mat-header-cell *matHeaderCellDef> Unit </th>
+            <td mat-cell *matCellDef="let element"> {{element.unitShortcode}} </td>
+          </ng-container>
+    
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.delnquenceName}} </td>
+          </ng-container>
+    
+     <!-- IFHRMS No Column -->
+     <ng-container matColumnDef="ifhrmsNo">
+      <th mat-header-cell *matHeaderCellDef> IFHRMS No </th>
+      <td mat-cell *matCellDef="let element"> {{element.ifhrmsNo}} </td>
+    </ng-container>
+    
+          <!-- Rank Column -->
+          <ng-container matColumnDef="rank">
+            <th mat-header-cell *matHeaderCellDef> Rank </th>
+            <td mat-cell *matCellDef="let element"> {{element.delnquenceRankMaster}} </td>
+          </ng-container>
+    
+          <ng-container matColumnDef="rankNo">
+            <th mat-header-cell *matHeaderCellDef> Rank No</th>
+            <td mat-cell *matCellDef="let element"> {{element.delnquenceRankNo}} </td>
+          </ng-container>
+    
+          <!-- Date of Birth Column -->
+          <ng-container matColumnDef="dob">
+            <th mat-header-cell *matHeaderCellDef> Date of Birth </th>
+            <td mat-cell *matCellDef="let element"> {{element.dateOfBirth | date}} </td>
+          </ng-container>
+    
+          <!-- Date of Enlistment Column -->
+          <ng-container matColumnDef="doe">
+            <th mat-header-cell *matHeaderCellDef> Date of Enlistment </th>
+            <td mat-cell *matCellDef="let element"> {{element.dateOfEnlishment | date}} </td>
+          </ng-container>
+    
+          <!-- Date of Retirement Column -->
+          <ng-container matColumnDef="dor">
+            <th mat-header-cell *matHeaderCellDef> Date of Retirement </th>
+            <td mat-cell *matCellDef="let element"> {{element.dateOfRetiredment | date}} </td>
+          </ng-container>
+
+          <!-- Working Place Column -->
+      <ng-container matColumnDef="workingPlace">
+        <th mat-header-cell *matHeaderCellDef> Working Place </th>
+        <td mat-cell *matCellDef="let element"> {{element.presentWorkingPlace}} </td>
+      </ng-container>
+
+      <!-- Joining Date Column -->
+      <ng-container matColumnDef="joiningDate">
+        <th mat-header-cell *matHeaderCellDef> Joining Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.dateOfJoiningInPresentPost | date}} </td>
+      </ng-container>
+
+      <!-- Mobile No Column -->
+      <ng-container matColumnDef="mobileNo">
+        <th mat-header-cell *matHeaderCellDef> Mobile No </th>
+        <td mat-cell *matCellDef="let element"> {{element.mobileNo}} </td>
+      </ng-container>
+
+      <!-- No. of PR Column -->
+      <ng-container matColumnDef="noOfPR">
+        <th mat-header-cell *matHeaderCellDef> No. of PR so for </th>
+        <td mat-cell *matCellDef="let element"> {{element.noOfPRsofar}} </td>
+      </ng-container>
+
+      <!-- Date of Occurrence Column -->
+      <ng-container matColumnDef="dateOfOccurrence">
+        <th mat-header-cell *matHeaderCellDef> Date of Occurrence </th>
+        <td mat-cell *matCellDef="let element"> {{element.dateOfOccurance | date}} </td>
+      </ng-container>
+
+      <!-- Place of Occurrence Column -->
+      <ng-container matColumnDef="placeOfOccurrence">
+        <th mat-header-cell *matHeaderCellDef> Place of Occurrence </th>
+        <td mat-cell *matCellDef="let element"> {{element.placeOfOccurance}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="currentPendingSequenceName">
+        <th mat-header-cell *matHeaderCellDef>Sequence Pending with</th>
+        <td mat-cell *matCellDef="let element"> {{element.currentPendingSequenceName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="delinquencyDetails">
+        <th mat-header-cell *matHeaderCellDef> Count of Charges </th>
+        <td mat-cell *matCellDef="let element">
+          <!-- Use the method from the component to check if delinquencyDetails is an array -->
+          {{ isArray(element.delinquencyDetails) && element.delinquencyDetails.length > 0
+          ? element.delinquencyDetails.join(', ')
+          : 'No details available' }}
+        </td>
+      </ng-container>
+
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element">
+
+          <button *ngIf="isEditButtonDisabled" mat-icon-button color="primary" (click)="onEdit(element.majorPrId, element.prSectionNo)">
+            <mat-icon>edit</mat-icon>
+
+          </button>
+
+            <button mat-icon-button color="accent" (click)="onMajorView(element.majorPrId)">
+            <mat-icon matTooltipPosition="above" matTooltip="View">visibility</mat-icon>
+          </button>
+
+          <button mat-icon-button color="accent" (click)="totalPRs(element.ifhrmsNo)">
+            <mat-icon matTooltipPosition="above" matTooltip="Total PR">group_add</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Header and Row -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'highlight-row': row.majorPrId === maxPrId}"></tr>
+      </table>
+
+      <ng-template #noData>
+        <div class="empty-state">
+          <div class="confused-face">
+            <div class="face">
+              <div class="eyes">
+                <div class="eye"></div>
+                <div class="eye"></div>
+              </div>
+              <div class="mouth"></div>
+            </div>
+          </div>
+          <h3 class="empty-title">No Data Found</h3>
+        </div>
+      </ng-template>
+
+     </div>
+  <!-- Pagination -->
+  <div class="paginator-container">
+    <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+
+  <div class="container mt-3 text-start custom_sty">
+    <button class="btn btn-secondary btn-sm btn_width" (click)="goBack()">Back</button>
+  </div>
+</div>

@@ -1,0 +1,109 @@
+<div style="height: 100vh;">
+<app-static-header></app-static-header>
+<h2 class="dashboard-header">{{userName}} PR Range Status</h2>
+<div class="pr-zone-container">
+    <div class="card-grid">
+    <mat-card *ngFor="let range of userZone" [ngClass]="{'selected-card': range.rangeId === selectedRangeId}" class="card" (click)="zonetoTabledata(range.rangeId,range.rangeName )"> 
+        <mat-card-title>{{ range.rangeName }}</mat-card-title>
+        <mat-card-title >Range</mat-card-title>
+        <mat-card-content>{{ range.rangePrCount }}</mat-card-content>
+      </mat-card>
+
+      <mat-card class="card card-color"    
+      [@cardAnimation]="cardStates['zoneMinorPRCount']" 
+      (mouseenter)="setHoverState('zoneMinorPRCount', 'hover')" 
+      (mouseleave)="setHoverState('zoneMinorPRCount', '*')">
+        <label class="fontsty">Total PR</label>
+        <mat-card-title >{{userName}}</mat-card-title>
+        <mat-card-content>{{zoneMinorPRCount}}</mat-card-content>
+      </mat-card>
+    </div>
+</div>
+
+
+<div class="pr-zone-container">
+<div class="pr-zone-container" *ngIf="districtgrid">
+  <h2 class="dashboard-header">PR Overview Of {{distviewerName}} Range</h2>
+    <div class="card-grid">
+     <mat-card *ngFor="let range of userRange" class="card"   [ngClass]="{
+      'highlight-card': !range.selected,
+      'selected-card': range.selected    
+    }"
+        (click)="rangetoTabledata(range.distId,range.distName)">
+        <mat-card-title>{{ range.distName }}</mat-card-title>
+        <mat-card-title >Dist</mat-card-title>
+        <mat-card-content>{{ range.distPrCount }}</mat-card-content>
+     </mat-card>
+
+    <mat-card class="card card-color"    
+      [@cardAnimation]="cardStates['rangeMinorPRCount']" 
+      (mouseenter)="setHoverState('rangeMinorPRCount', 'hover')" 
+      (mouseleave)="setHoverState('rangeMinorPRCount', '*')">
+        <label class="fontsty">Total PR</label>
+        <mat-card-title > {{totalprViewer}}</mat-card-title>
+        <mat-card-content>{{rangeMinorPRCount}}</mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+  <!------------ PR counts---------->
+  <h2 class="dashboard-header">PR Section Wise Overview {{viewerName}} </h2>
+  <div class="cards-section">
+    <div class="row-layout">
+      <mat-card class="card card-green" (click)="navigateToTableDataBasedOnSection('3a')"  
+      [@cardAnimation]="cardStates['3A']" [ngClass]="{'highlight-value': highlightData}"
+      (mouseenter)="setHoverState('3A', 'hover')" 
+      (mouseleave)="setHoverState('3A', '*')">
+        <label class="fontsty">Minor PR</label>
+        <mat-card-title >3A</mat-card-title>
+        <mat-card-content>{{ totalPR3A }}</mat-card-content>
+      </mat-card>
+
+      <mat-card class="card card-blue" (click)="navigateToTableDataBasedOnSection('17a')" 
+      [@cardAnimation]="cardStates['17A']" [ngClass]="{'highlight-value': highlightData}"
+      (mouseenter)="setHoverState('17A', 'hover')" 
+      (mouseleave)="setHoverState('17A', '*')">
+        <label class="fontsty">Minor PR</label>
+        <mat-card-title>17A</mat-card-title>
+        <mat-card-content>{{ totalPR17A }}</mat-card-content>
+      </mat-card>
+
+      <mat-card class="card card-skyblue" (click)="totalPrlist()" 
+      [@cardAnimation]="cardStates['TotalMinor']" [ngClass]="{'highlight-value': highlightData}"
+      (mouseenter)="setHoverState('TotalMinor', 'hover')" 
+      (mouseleave)="setHoverState('TotalMinor', '*')">
+        <mat-card-title class="fontsty">Total Minor PR</mat-card-title>
+        <mat-card-content>{{totalMinorPrCount}}</mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Row 2: 3B and 17B -->
+    <div class="row-layout">
+      <mat-card class="card card-yellow" 
+      [@cardAnimation]="cardStates['3B']" [ngClass]="{'highlight-value': highlightData}"
+      (mouseenter)="setHoverState('3B', 'hover')" 
+      (mouseleave)="setHoverState('3B', '*')">
+        <label class="fontsty">Major PR</label>
+        <mat-card-title>3B</mat-card-title>
+        <mat-card-content>{{ totalPR3B }}</mat-card-content>
+      </mat-card>
+
+      <mat-card class="card card-red"  
+      [@cardAnimation]="cardStates['17B']" [ngClass]="{'highlight-value': highlightData}"
+      (mouseenter)="setHoverState('17B', 'hover')" 
+      (mouseleave)="setHoverState('17B', '*')">
+        <label class="fontsty">Major PR</label>
+        <mat-card-title>17B</mat-card-title>
+        <mat-card-content>{{ totalPR17B }}</mat-card-content>
+      </mat-card>
+
+      <mat-card class="card card-gray" 
+      [@cardAnimation]="cardStates['TotalMajor']" [ngClass]="{'highlight-value': highlightData}"
+      (mouseenter)="setHoverState('TotalMajor', 'hover')" 
+      (mouseleave)="setHoverState('TotalMajor', '*')">
+        <mat-card-title class="fontsty">Total Major PR</mat-card-title>
+        <mat-card-content>{{totalMajorPrCount}}</mat-card-content>
+      </mat-card>
+    </div> 
+  </div>
+</div>

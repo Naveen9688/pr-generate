@@ -1,0 +1,527 @@
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* .container {
+  max-width: 300px;
+} */
+
+.card {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  text-align: center;
+  width: 36vw;
+}
+
+button {
+  width: 24%;
+  background-color: green;
+}
+
+.d-flex {
+  display: flex;
+  align-items: center;
+}
+
+.pr-field {
+  width: 33.33%;
+  text-align: center;
+  margin-right: -1px;
+  border-radius: 4px;
+  background-color: #dfe2e5;
+  /* width: auto; */
+  display: inline-block;
+  margin: 3px;
+  position: relative;
+  height: 30px;
+}
+
+.slash {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 0 10px;
+  color: #000;
+}
+.text-danger {
+  font-size: 0.875rem;
+  color: red;
+}
+
+input {
+  border: none;
+  background: transparent;
+  /* width: 33%; */
+  
+}
+
+input:focus {
+  outline: none;
+}
+
+input:disabled {
+  background-color: #f9f9f9;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pr-input {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  font-size: 1.25rem;
+  letter-spacing: 1px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+}
+
+
+
+/* Container style */
+.container {
+    padding: 20px;
+}
+
+/* Title styling */
+h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+}
+
+/* Punishment category title */
+.punishment-title {
+    font-size: 1.75rem;
+    font-weight: 500;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+/* Section spacing between columns */
+.row {
+    display: flex;
+     /* gap: 30px;  */
+    /* flex-wrap: wrap; Allows the columns to stack on smaller screens */ 
+    align-items: center;
+    justify-content: center;
+     /* height: 50vh;  */
+}
+
+/* Each punishment section */
+.punishment-category {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    text-align: center;
+    width: 342px;
+    max-width: 400px;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    margin-left: 10px;
+   
+}
+
+
+
+
+.punishment-category:hover {
+    transform: translateY(-5px); /* Hover effect */
+}
+
+/* Button styling */
+.punishment-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.punishment-buttons .btn {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.punishment-buttons .btn:hover {
+    background-color: #0056b3;
+}
+
+/* Minor punishment buttons */
+.punishment-buttons .btn-success {
+    background-color: #f17623;
+    border: none;
+}
+
+.punishment-buttons .btn-success:hover {
+    background-color: #f17623;
+}
+
+/* Major punishment buttons */
+.punishment-buttons .btn-danger {
+    background-color: #ec0c22;
+    border: none;
+}
+
+.punishment-buttons .btn-danger:hover {
+    background-color: #ec0c22;
+}
+
+/* Responsive design adjustments for smaller screens */
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .punishment-category {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        font-size: 2rem; /* Adjust title font size for smaller screens */
+    }
+}
+
+/* Selected punishment display */
+.mt-4 {
+    margin-top: 30px;
+}
+
+.mt-4 h4 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.mt-4 p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+
+
+
+/* ---------------------------- */
+
+  
+  /* Container for the form, centers content on the page */
+  /* .container { */
+    /* max-width: 600px; */
+    /* margin-top: 50px; 
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  /* } */
+  
+  /* Card Header styling */
+  .card-header {
+    /* background-color: #007bff; */
+    color: #333;
+    font-size: 1.5rem;
+    text-align: center;
+    border-radius: 8px 8px 0 0; /* Rounded top corners */
+    /* padding: 15px; */
+  }
+  
+  /* Card Body styling */
+  .card-body {
+    padding: 10px;
+  }
+  
+  /* Input field styling */
+  input.form-control,
+  select.form-control {
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    /* padding: 2px; */
+    /* font-size: 1rem; */
+    margin-bottom: 15px; /* Space between input fields */
+    background-color: #dfe2e5;
+    /* width: auto; */
+    /* display: inline-block; */
+     margin: 7px;
+     text-align: center;
+    /* position: relative; */
+    height: 30px;
+  }
+  
+  input.form-control:focus,
+  select.form-control:focus {
+    border-color: #007bff; /* Highlight border color when focused */
+    outline: none; /* Remove outline */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add blue shadow on focus */
+  }
+  
+  /* Button styling */
+  button {
+    /* width: 100%;  */
+    padding: 12px;
+    background-color: #28a745; /* Bootstrap success green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #218838; /* Darker green on hover */
+  }
+  
+  /* Success message styling */
+  .alert-success {
+    margin-top: 30px;
+    font-size: 1.1rem;
+    padding: 15px;
+    background-color: #d4edda; /* Bootstrap success background */
+    border: 1px solid #c3e6cb; /* Border color */
+    border-radius: 5px;
+  }
+  
+  .alert-success strong {
+    font-weight: bold;
+  }
+  
+  .slash {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0 10px;
+    color: #000;
+  }
+  
+  .pr-field {
+    width: 33.33%;
+    text-align: center;
+    margin-right: -1px;
+    border-radius: 4px;
+    background-color: #dfe2e5;
+    /* width: auto; */
+    display: inline-block;
+    margin: 3px;
+    position: relative;
+    height: 30px;
+  }
+
+  .mb-3{
+    display: inline;
+  }
+  /* .mb-5{
+    display: flex;
+  } */
+
+  .form-label{
+    width: 20%;
+  }
+
+  .btn-small {
+    font-size: 12px;
+    padding: 5px 10px; /* Adjust as needed */
+    border-radius: 3px; /* Optional for rounded corners */
+  }
+
+  .right-align {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .custom_sty{
+    display: flex;
+    justify-content: end;
+  }
+
+  .btn_width{
+    width: 6%;
+  }
+
+  /* .section_back_btn{
+    position: relative;
+    right: 6vw;
+    padding: 0px;
+    height: 4vh;
+    bottom: 4vh;
+  } */
+
+  .pr_details_container {
+    border: 2px solid gray; 
+    border-radius: 5px; 
+    /* padding: 25px; */
+    /* background: linear-gradient(to bottom right, #e3f2fd, #d1ecf1); */
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15); 
+    max-width: 90%; 
+    margin: 30px auto;
+    backdrop-filter: blur(8px); 
+}
+
+
+.pr_details_container .card {
+    border: none; 
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    background: white;
+    transition: all 0.3s ease-in-out;
+}
+
+.pr_details_container .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+/* Headings and Text */
+.pr_details_container h1 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    /* color: #004085; */
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Buttons with modern styling */
+.pr_details_container .btn {
+    border-radius: 6px;
+    font-weight: bold;
+    padding: 10px 16px;
+    transition: 0.3s ease-in-out;
+}
+
+/* .pr_details_container .btn-primary {
+    background: #007bff;
+    border: none;
+} */
+
+/* .pr_details_container .btn-primary:hover {
+    background: #0056b3;
+} */
+
+/* Minor & Major Punishment Sections */
+.pr_details_container .punishment-category {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    background: white;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.pr_details_container .punishment-category:hover {
+    transform: scale(1.02);
+}
+
+.pr_details_container .punishment-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #222;
+}
+
+.pr_details_container .punishment-buttons .btn {
+    width: 90px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.section_back_btn {
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+
+/* totalPR counts of existing prs styles */
+
+
+.totalprcontainer {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+mat-form-field {
+  flex: 1;
+  min-width: 150px;
+}
+
+/* button {
+  height: 56px;
+} */
+
+table {
+  width: 100%;
+  margin-top: 20px;
+}
+.totalpr_Add:hover{
+  color: white;
+}
+.totalpr_Add{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  margin-left: 40%;
+}
+
+.action_btn{
+  padding: 10px;
+  width: 40%;
+}
+
+.table-container {
+  max-height: 300px; /* Adjust height as needed */
+  overflow-y: auto;
+  display: block;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  background: #f5f5f5; /* Sticky header background */
+  z-index: 2;
+}
+
+.scrollable-body {
+  display: block;
+  max-height: 250px; /* Scroll after 5 rows */
+  overflow-y: auto;
+}
+
+.exispr_label{
+ white-space: nowrap;
+}
+.exispr_card{
+background-color: #f9f9f9;
+border-radius: 8px;
+padding: 10px;
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+transition: transform 0.3s ease;
+text-align: center;
+}
